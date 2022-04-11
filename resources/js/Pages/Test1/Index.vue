@@ -1,16 +1,21 @@
 <script setup>
 import {Head, Link} from '@inertiajs/inertia-vue3';
+import MyModelBrief from "../../components/MyModelBrief";
 
 defineProps({
-    laravelVersion: String,
-    phpVersion: String,
+    myModels: Object,
 });
+
 </script>
 
 <template>
     <Head title="Test1"/>
-    <div>
-        This is test 1
+    <div class="container mx-auto px-4">
+        <div class="grid grid-cols-3 gap-4 text-center">
+            <div v-for="myModel in this.myModels" :key="myModel.id">
+                <my-model-brief :name="myModel.name" :price="myModel.price" :image="myModel.image"></my-model-brief>
+            </div>
+        </div>
     </div>
 </template>
 

@@ -19,7 +19,7 @@ class CreateMyModelsTable extends Migration
             $table->string('name');
             $table->string('image');
             $table->integer('price');
-            $table->string('username');
+            $table->string('username')->default('Username');
         });
     }
 
