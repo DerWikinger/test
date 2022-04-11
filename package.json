@@ -31,5 +31,8 @@
         "vue": "^3.2.31",
         "vue-loader": "^17.0.0",
         "vue-template-compiler": "^2.6.12"
+    },
+    "dependencies": {
+        "@inertiajs/inertia-vue": "^0.8.0"
     }
 }
