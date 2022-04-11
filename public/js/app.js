@@ -25122,11 +25122,14 @@ __webpack_require__.r(__webpack_exports__);
     // MyModel: Object,
     name: String,
     image: String,
-    price: Number
+    price: Number,
+    username: String
   },
   methods: {
     getSource: function getSource() {
-      return '/storage/images/' + this.image;
+      // return '/storage/images/' + this.image;
+      // return 'http://95.179.188.38' + '/storage/models/01fywd0hzp107e8db24y0byx9x-8/62446ee699883_rapier_1.JPG';
+      return 'http://95.179.188.38' + this.image;
     }
   }
 });
@@ -29361,7 +29364,7 @@ var _withScopeId = function _withScopeId(n) {
 };
 
 var _hoisted_1 = {
-  "class": "container mx-auto px-4"
+  "class": "container mx-auto px-4 py-2"
 };
 var _hoisted_2 = {
   "class": "grid grid-cols-3 gap-4 text-center"
@@ -29373,12 +29376,13 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
       key: myModel.id
     }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["MyModelBrief"], {
-      name: myModel.name,
+      name: myModel.model_name,
       price: myModel.price,
-      image: myModel.image
+      image: myModel.image,
+      username: myModel.user_name
     }, null, 8
     /* PROPS */
-    , ["name", "price", "image"])]);
+    , ["name", "price", "image", "username"])]);
   }), 128
   /* KEYED_FRAGMENT */
   ))])])], 64
@@ -29515,16 +29519,22 @@ var _hoisted_2 = {
 };
 var _hoisted_3 = ["src"];
 var _hoisted_4 = {
-  "class": "description col-12"
+  "class": "description"
 };
 var _hoisted_5 = {
-  "class": "title row"
+  "class": "flex justify-between"
 };
 var _hoisted_6 = {
-  "class": "col-10"
+  "class": "title"
 };
 var _hoisted_7 = {
-  "class": "col-2"
+  "class": "price font-semibold"
+};
+var _hoisted_8 = {
+  "class": "flex"
+};
+var _hoisted_9 = {
+  "class": "author"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
@@ -29535,7 +29545,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* PROPS */
   , _hoisted_3)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(this.name), 1
   /* TEXT */
-  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(this.price), 1
+  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, " $" + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(this.price), 1
+  /* TEXT */
+  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, " by " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(this.username), 1
   /* TEXT */
   )])])]);
 }
@@ -34726,7 +34738,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.avatar[data-v-0f97a1f0] {\n    height: 200px;\n}\n.avatar img[data-v-0f97a1f0] {\n    width: 100%;\n    height: 100%;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.avatar[data-v-0f97a1f0] {\n    height: 200px;\n    border: 2px solid transparent;\n}\n.avatar img[data-v-0f97a1f0] {\n    width: 100%;\n    height: 100%;\n}\n.avatar[data-v-0f97a1f0]:hover {\n    cursor: pointer;\n    border: 2px solid blue;\n}\n.description[data-v-0f97a1f0]:hover {\n    cursor: pointer;\n    text-decoration: underline;\n}\n.description[data-v-0f97a1f0] {\n    margin-top: 17px;\n    font-family: 'Montserrat';\n    font-style: normal;\n    font-weight: 400;\n    font-size: 18px;\n    line-height: 22px;\n}\n.author[data-v-0f97a1f0] {\n    font-size: 14px;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

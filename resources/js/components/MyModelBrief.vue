@@ -3,13 +3,18 @@
     <div class="avatar">
         <img class="" :src="this.getSource()" alt="No image">
     </div>
-    <div class="description col-12">
-        <div class="title row">
-            <div class="col-10">
+    <div class="description">
+        <div class="flex justify-between">
+            <div class="title">
                 {{ this.name }}
             </div>
-            <div class="col-2">
-                {{ this.price }}
+            <div class="price font-semibold">
+                ${{ this.price }}
+            </div>
+        </div>
+        <div class="flex">
+            <div class="author">
+                by {{ this.username }}
             </div>
         </div>
     </div>
@@ -24,10 +29,13 @@ export default {
         name: String,
         image: String,
         price: Number,
+        username: String,
     },
     methods: {
         getSource() {
-            return '/storage/images/' + this.image;
+            // return '/storage/images/' + this.image;
+            // return 'http://95.179.188.38' + '/storage/models/01fywd0hzp107e8db24y0byx9x-8/62446ee699883_rapier_1.JPG';
+            return 'http://95.179.188.38' + this.image;
         }
     }
 }
@@ -36,9 +44,30 @@ export default {
 <style scoped>
 .avatar {
     height: 200px;
+    border: 2px solid transparent;
 }
 .avatar img {
     width: 100%;
     height: 100%;
+}
+.avatar:hover {
+    cursor: pointer;
+    border: 2px solid blue;
+}
+
+.description:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+.description {
+    margin-top: 17px;
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 22px;
+}
+.author {
+    font-size: 14px;
 }
 </style>

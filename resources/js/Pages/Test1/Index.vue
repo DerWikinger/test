@@ -10,10 +10,15 @@ defineProps({
 
 <template>
     <Head title="Test1"/>
-    <div class="container mx-auto px-4">
+    <div class="container mx-auto px-4 py-2">
         <div class="grid grid-cols-3 gap-4 text-center">
             <div v-for="myModel in this.myModels" :key="myModel.id">
-                <my-model-brief :name="myModel.name" :price="myModel.price" :image="myModel.image"></my-model-brief>
+                <my-model-brief
+                    :name="myModel.model_name"
+                    :price="myModel.price"
+                    :image="myModel.image"
+                    :username="myModel.user_name">
+                </my-model-brief>
             </div>
         </div>
     </div>

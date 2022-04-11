@@ -9,6 +9,7 @@ use Inertia\Inertia;
 class Test1Controller extends Controller
 {
     public function index() {
-        return Inertia::render('Test1/Index', ['myModels' => MyModel::all()]);
+        $data = json_decode(file_get_contents('/home/vitaly/PhpstormProjects/test/resources/js/collection.json'));
+        return Inertia::render('Test1/Index', ['myModels' => collect($data->data->modelsData)]);
     }
 }
