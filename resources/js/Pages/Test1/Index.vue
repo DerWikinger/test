@@ -1,6 +1,7 @@
 <script setup>
 import {Head, Link} from '@inertiajs/inertia-vue3';
 import MyModelsCollection from "@/components/MyModelsCollection";
+import MyModelIcon from "@/components/MyModelIcon";
 
 defineProps({
     myModels: Object,
@@ -10,6 +11,15 @@ defineProps({
 
 <template>
     <Head title="Test1"/>
+    <div class="container mx-auto px-0 py-2 mx-0">
+        <div class="grid grid-cols-6 gap-2 text-center">
+            <div v-for="myModel in this.myModels" :key="myModel.id">
+                            <my-model-icon
+                                :image="myModel.image">
+                            </my-model-icon>
+            </div>
+        </div>
+    </div>
     <div class="container mx-auto px-40 py-2">
         <my-models-collection :my-models="this.myModels"></my-models-collection>
     </div>

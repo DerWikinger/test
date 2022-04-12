@@ -44,6 +44,7 @@ export default {
 .avatar {
     height: 260px;
     border: 2px solid transparent;
+    box-sizing: border-box;
 }
 .avatar img {
     width: 100%;
@@ -52,6 +53,7 @@ export default {
 .avatar:hover {
     cursor: pointer;
     border: 2px solid blue;
+    box-sizing: border-box;
 }
 
 .description:hover {
