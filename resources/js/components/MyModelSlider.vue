@@ -1,6 +1,6 @@
 <template>
         <div class="wrapper">
-            <div class="carousel">
+            <div class="slider" :style="{ 'margin-left': '-' + (100 + (200 * currentPosition)) + 'px' }">
                 <my-model-icon v-for="myModel in this.myModels" :key="myModel.id"
                                :image="myModel.image">
                 </my-model-icon>
@@ -16,6 +16,8 @@ export default {
     name: "MyModelSlider",
     props: {
         myModels: Object,
+        slidedItemsCount: { type: Number, default: 3 },
+        visibleItemsCount: { type: Number, default: 6 },
     },
     components: {
         MyModelIcon,
@@ -25,16 +27,21 @@ export default {
     },
     methods: {
         prevItem() {
-
+            if(this.currentPosition >= this.slidedItemsCount) {
+                this.currentPosition -= this.slidedItemsCount;
+            }
         },
         nextItem() {
-
+            if(this.currentPosition <= this.myModels.length - (this.visibleItemsCount + this.slidedItemsCount)) {
+                this.currentPosition += this.slidedItemsCount;
+            }
         }
     },
     data() {
         return {
             forwardCollection: [],
             reverseCollection: [],
+            currentPosition: 0,
         }
     }
 }
@@ -50,8 +57,9 @@ export default {
     overflow: hidden;
 }
 
-.carousel {
+.slider {
     display: flex;
+    transition: all ease 0.5s;
 }
 
 .btnPrev, .btnNext {

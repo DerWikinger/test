@@ -12,7 +12,7 @@ defineProps({
 
 <template>
     <Head title="Test1"/>
-    <div class="slider">
+    <div class="">
         <my-model-slider :my-models="this.myModels"></my-model-slider>
     </div>
     <p class="flex justify-center">

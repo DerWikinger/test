@@ -23,6 +23,7 @@ export default {
 .item {
     display: inline-block;
     height: 200px;
+    width: 200px;
     min-width: 200px;
     border: none;
     box-sizing: border-box;

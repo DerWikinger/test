@@ -25183,20 +25183,37 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "MyModelSlider",
   props: {
-    myModels: Object
+    myModels: Object,
+    slidedItemsCount: {
+      type: Number,
+      "default": 3
+    },
+    visibleItemsCount: {
+      type: Number,
+      "default": 6
+    }
   },
   components: {
     MyModelIcon: _components_MyModelIcon__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   mounted: function mounted() {},
   methods: {
-    prevItem: function prevItem() {},
-    nextItem: function nextItem() {}
+    prevItem: function prevItem() {
+      if (this.currentPosition >= this.slidedItemsCount) {
+        this.currentPosition -= this.slidedItemsCount;
+      }
+    },
+    nextItem: function nextItem() {
+      if (this.currentPosition <= this.myModels.length - (this.visibleItemsCount + this.slidedItemsCount)) {
+        this.currentPosition += this.slidedItemsCount;
+      }
+    }
   },
   data: function data() {
     return {
       forwardCollection: [],
-      reverseCollection: []
+      reverseCollection: [],
+      currentPosition: 0
     };
   }
 });
@@ -29513,7 +29530,7 @@ var _withScopeId = function _withScopeId(n) {
 };
 
 var _hoisted_1 = {
-  "class": "slider"
+  "class": ""
 };
 
 var _hoisted_2 = /*#__PURE__*/_withScopeId(function () {
@@ -29762,13 +29779,15 @@ var _withScopeId = function _withScopeId(n) {
 var _hoisted_1 = {
   "class": "wrapper"
 };
-var _hoisted_2 = {
-  "class": "carousel"
-};
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_my_model_icon = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("my-model-icon");
 
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(this.myModels, function (myModel) {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    "class": "slider",
+    style: (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)({
+      'margin-left': '-' + (100 + 200 * $data.currentPosition) + 'px'
+    })
+  }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(this.myModels, function (myModel) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_my_model_icon, {
       key: myModel.id,
       image: myModel.image
@@ -29777,7 +29796,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     , ["image"]);
   }), 128
   /* KEYED_FRAGMENT */
-  ))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  ))], 4
+  /* STYLE */
+  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     "class": "btnPrev",
     onClick: _cache[0] || (_cache[0] = function () {
       return $options.prevItem && $options.prevItem.apply($options, arguments);
@@ -35061,7 +35082,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.item[data-v-1d4f9a4a] {\n    display: inline-block;\n    height: 200px;\n    min-width: 200px;\n    border: none;\n    box-sizing: border-box;\n}\n.item img[data-v-1d4f9a4a] {\n    width: 100%;\n    height: 100%;\n}\n/*.avatar:hover {*/\n/*    cursor: pointer;*/\n/*    border: 2px solid blue;*/\n/*    box-sizing: border-box;*/\n/*}*/\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.item[data-v-1d4f9a4a] {\n    display: inline-block;\n    height: 200px;\n    width: 200px;\n    min-width: 200px;\n    border: none;\n    box-sizing: border-box;\n}\n.item img[data-v-1d4f9a4a] {\n    width: 100%;\n    height: 100%;\n}\n/*.avatar:hover {*/\n/*    cursor: pointer;*/\n/*    border: 2px solid blue;*/\n/*    box-sizing: border-box;*/\n/*}*/\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -35085,7 +35106,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.wrapper[data-v-cacbde7a] {\n    padding: 0;\n    margin: 0;\n    position: relative;\n    width: 100%;\n    overflow: hidden;\n}\n.carousel[data-v-cacbde7a] {\n    display: flex;\n}\n.btnPrev[data-v-cacbde7a], .btnNext[data-v-cacbde7a] {\n    position: absolute;\n    height: 100%;\n    width: 60px;\n    top: 0;\n    background: #1f2937;\n    opacity: 0;\n}\n.btnNext[data-v-cacbde7a] {\n    right: 0;\n}\n.btnPrev[data-v-cacbde7a]:hover, .btnNext[data-v-cacbde7a]:hover {\n    opacity: 0.4;\n}\n\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.wrapper[data-v-cacbde7a] {\n    padding: 0;\n    margin: 0;\n    position: relative;\n    width: 100%;\n    overflow: hidden;\n}\n.slider[data-v-cacbde7a] {\n    display: flex;\n    transition: all ease 0.5s;\n}\n.btnPrev[data-v-cacbde7a], .btnNext[data-v-cacbde7a] {\n    position: absolute;\n    height: 100%;\n    width: 60px;\n    top: 0;\n    background: #1f2937;\n    opacity: 0;\n}\n.btnNext[data-v-cacbde7a] {\n    right: 0;\n}\n.btnPrev[data-v-cacbde7a]:hover, .btnNext[data-v-cacbde7a]:hover {\n    opacity: 0.4;\n}\n\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
