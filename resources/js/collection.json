@@ -1,12 +1,13 @@
 {
     "success":true,
     "data":{
-        "collectionDdata":
-        {"id":1,"name":"test","description":"test","tags":"test","views_count":0,"likes_count":0,"dislikes_count":0,"image_path":"\/storage\/collections\/01fywd0hzp107e8db24y0byx9x-1\/1649412317.png"},
+        "collectionData":
+            {"id":1,"name":"test","description":"test","tags":"test","views_count":0,"likes_count":0,"dislikes_count":0,"image_path":"\/storage\/collections\/01fywd0hzp107e8db24y0byx9x-1\/1649412317.png"},
         "collectionModels":[
             {"id":10,"model_name":"Rapier","price":0,"user_name":"Andrey Kovalev","image":"\/storage\/models\/01fywd0hzp107e8db24y0byx9x-8\/62446ee699883_rapier_1.JPG"},
             {"id":8,"model_name":"Rapier","price":0,"user_name":"Andrey Kovalev","image":"\/storage\/models\/01fywd0hzp107e8db24y0byx9x-8\/62446ee28885e_rapier_3.JPG"}
-        ],"collectionImages": ["\/storage\/models\/01fywd0hzp107e8db24y0byx9x-8\/62446ee699883_rapier_1.JPG","\/storage\/models\/01fywd0hzp107e8db24y0byx9x-8\/62446ee28885e_rapier_3.JPG"],
+        ],
+        "collectionImages": ["\/storage\/models\/01fywd0hzp107e8db24y0byx9x-8\/62446ee699883_rapier_1.JPG","\/storage\/models\/01fywd0hzp107e8db24y0byx9x-8\/62446ee28885e_rapier_3.JPG"],
         "modelsData":[
             {"id":1,"model_name":"test","price":55,"user_name":"Taron Taron","image":"\/storage\/models\/01fz8ppb7m39krzdps0znt81wp-1\/6241e641764d3_fav1.png\/6241e641764d3_fav1.png"},
             {"id":2,"model_name":"axe","price":0,"user_name":"Andrey Kovalev","image":"\/storage\/models\/01fywd0hzp107e8db24y0byx9x-2\/6241d2d754141_ref.jpg"},
