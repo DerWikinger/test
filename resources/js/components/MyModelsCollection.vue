@@ -25,8 +25,18 @@ export default {
     name: "MyModelsCollection",
     props: {
         myModels: Object,
-        visibleRows: {type: Number, default: 4},
+        visibleRows: {type: Number, default: 3},
         currentRow: {type: Number, default: 1},
+    },
+    watch: {
+        currentRow(newValue, oldValue) {
+            this.currentTopRow = newValue;
+            if(this.currentTopRow >= (this.totalRows - this.visibleRows)) {
+                this.end = true;
+            } else {
+                this.end = false;
+            }
+        }
     },
     components: {
         MyModelBrief
@@ -36,12 +46,14 @@ export default {
             if(this.currentTopRow > 1) {
                 this.currentTopRow = 1;
                 this.end = false;
+                this.$emit('rolling', this.currentTopRow);
             }
         },
         onMoreClick() {
             if(this.currentTopRow++ >= (this.totalRows - this.visibleRows)) {
                 this.end = true;
             }
+            this.$emit('rolling', this.currentTopRow);
         }
     },
     data() {
@@ -63,7 +75,7 @@ export default {
 <style scoped>
 
 .v-wrapper {
-    height: 1428px;
+    height: 1071px;
     overflow: hidden;
 
 }

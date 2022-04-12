@@ -1,11 +1,11 @@
 <template>
         <div class="wrapper">
-            <div class="slider" :style="{ 'margin-left': '-' + (100 + (200 * currentPosition)) + 'px' }">
+            <div class="slider" :style="{ 'margin-left': '-' + (itemWidth/2 + (itemWidth * currentPosition)) + 'px' }">
                 <my-model-icon v-for="myModel in this.forwardCollection" :key="myModel.id"
                                :image="myModel.image">
                 </my-model-icon>
             </div>
-            <div class="slider" :style="{ 'margin-left': '-' + (100 + (200 * currentPosition)) + 'px' }">
+            <div class="slider" :style="{ 'margin-left': '-' + (itemWidth/2 + (itemWidth * currentPosition)) + 'px' }">
                 <my-model-icon v-for="myModel in this.reverseCollection" :key="myModel.id"
                                :image="myModel.image">
                 </my-model-icon>
@@ -27,6 +27,12 @@ export default {
         myModels: Object,
         slidedItemsCount: { type: Number, default: 3 },
         visibleItemsCount: { type: Number, default: 6 },
+        currentRow: {type: Number, default: 1 },
+    },
+    watch: {
+        currentRow(newValue, oldValue) {
+            this.currentPosition = (newValue - 1) * this.slidedItemsCount;
+        }
     },
     components: {
         MyModelIcon,
@@ -41,11 +47,13 @@ export default {
         prevItem() {
             if(this.currentPosition >= this.slidedItemsCount) {
                 this.currentPosition -= this.slidedItemsCount;
+                this.$emit('sliding', this.currentPosition );
             }
         },
         nextItem() {
             if(this.currentPosition <= this.myModels.length - (this.visibleItemsCount + this.slidedItemsCount)) {
                 this.currentPosition += this.slidedItemsCount;
+                this.$emit('sliding', this.currentPosition );
             }
         }
     },
@@ -54,6 +62,7 @@ export default {
             forwardCollection: [],
             reverseCollection: [],
             currentPosition: 0,
+            itemWidth: 200,
         }
     }
 }

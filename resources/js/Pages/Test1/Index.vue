@@ -6,6 +6,7 @@ import MyModelSlider from "@/components/MyModelSlider";
 
 defineProps({
     myModels: Object,
+    // currentRow: {type: Number, default: 1},
 });
 
 </script>
@@ -13,15 +14,35 @@ defineProps({
 <template>
     <Head title="Test1"/>
     <div class="">
-        <my-model-slider :my-models="this.myModels"></my-model-slider>
+        <my-model-slider :currentRow="this.currentRow" :my-models="this.myModels" @sliding="this.onSlide"></my-model-slider>
     </div>
-    <p class="flex justify-center">
-        <h1>Hallo World!</h1>
-    </p>
+    <h1 class="flex justify-center">Hallo World!</h1>
     <div class="container mx-auto px-40 py-2">
-        <my-models-collection :my-models="this.myModels"></my-models-collection>
+        <my-models-collection :currentRow="this.currentRow"
+                              :my-models="this.myModels" @rolling="this.onRoll"></my-models-collection>
     </div>
 </template>
+
+<script>
+export default {
+    name: 'Index',
+    methods: {
+        onSlide: function (currentPosition) {
+            this.currentRow = Math.trunc(currentPosition / 3) + 1;
+            console.log(this.currentRow);
+        },
+        onRoll: function (currentTopRow) {
+            this.currentRow = currentTopRow;
+            console.log('Current row: ', currentTopRow);
+        }
+    },
+    data() {
+        return {
+            currentRow: 1,
+        }
+    }
+}
+</script>
 
 <style scoped>
 .bg-gray-100 {
