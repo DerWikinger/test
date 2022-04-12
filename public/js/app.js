@@ -25245,59 +25245,36 @@ __webpack_require__.r(__webpack_exports__);
     visibleRows: {
       type: Number,
       "default": 4
+    },
+    currentRow: {
+      type: Number,
+      "default": 1
     }
   },
   components: {
     MyModelBrief: _components_MyModelBrief__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
-  mounted: function mounted() {
-    this.getFirstVisibleRows();
-    console.log('Collection: ', this.collection);
-  },
   methods: {
-    getRow: function getRow(rowNumber) {
-      var next = rowNumber * 3;
-
-      for (var i = (rowNumber - 1) * 3; i < next; i++) {
-        if (i <= this.myModels.length) this.collection.push(this.myModels[i]);
-      }
-    },
-    getFirstVisibleRows: function getFirstVisibleRows() {
-      for (this.row = 1; this.row <= this.visibleRows && this.row < this.rows; this.row++) {
-        for (var c = (this.row - 1) * 3; c < this.myModels.length && c < this.row * 3; c++) {
-          this.collection.push(this.myModels[c]);
-        }
-      }
-    },
     onBackClick: function onBackClick() {
-      this.collection = [];
-      this.getFirstVisibleRows();
-      this.end = false;
+      if (this.currentTopRow > 1) {
+        this.currentTopRow = 1;
+        this.end = false;
+      }
     },
     onMoreClick: function onMoreClick() {
-      // console.log(this.row);
-      var next = this.row * 3;
-
-      for (var i = (this.row - 1) * 3; i < next; i++) {
-        if (i < this.myModels.length) this.collection.push(this.myModels[i]);
-      }
-
-      if (this.row < this.rows) {
-        this.row++;
-      } else {
+      if (this.currentTopRow++ >= this.totalRows - this.visibleRows) {
         this.end = true;
       }
     }
   },
   data: function data() {
     return {
-      row: 1,
-      collection: [],
+      currentTopRow: 1,
       end: false
     };
   },
   computed: {
-    rows: function rows() {
+    totalRows: function totalRows() {
       var r = Math.trunc(this.myModels.length / 3);
       if (this.myModels.length % 3) r += 1;
       return r;
@@ -29875,7 +29852,7 @@ var _withScopeId = function _withScopeId(n) {
 };
 
 var _hoisted_1 = {
-  "class": "grid grid-cols-3 gap-4 text-center"
+  "class": "v-wrapper"
 };
 var _hoisted_2 = {
   "class": "flex justify-center"
@@ -29883,7 +29860,12 @@ var _hoisted_2 = {
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_my_model_brief = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("my-model-brief");
 
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(this.collection, function (myModel) {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    "class": "v-gallery grid grid-cols-3 gap-y-0 gap-x-4 text-center",
+    style: (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)({
+      'margin-top': '-' + 360 * ($data.currentTopRow - 1) + 'px'
+    })
+  }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(this.myModels, function (myModel) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
       key: myModel.id
     }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_my_model_brief, {
@@ -29896,21 +29878,23 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     , ["name", "price", "image", "username"])]);
   }), 128
   /* KEYED_FRAGMENT */
-  ))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [this.end ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
+  ))], 4
+  /* STYLE */
+  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [this.end ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
     key: 0,
     id: "btnBack",
     "class": "",
     onClick: _cache[0] || (_cache[0] = function () {
       return $options.onBackClick && $options.onBackClick.apply($options, arguments);
     })
-  }, "Назад")) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
+  }, "Назад")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), !this.end && this.totalRows > this.visibleRows ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
     key: 1,
     id: "btnMore",
     "class": "",
     onClick: _cache[1] || (_cache[1] = function () {
       return $options.onMoreClick && $options.onMoreClick.apply($options, arguments);
     })
-  }, "Показать ещё 3"))])], 64
+  }, "Показать ещё 3")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])], 64
   /* STABLE_FRAGMENT */
   );
 }
@@ -35101,7 +35085,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.avatar[data-v-0f97a1f0] {\n    height: 260px;\n    border: 2px solid transparent;\n    box-sizing: border-box;\n}\n.avatar img[data-v-0f97a1f0] {\n    width: 100%;\n    height: 100%;\n}\n.avatar[data-v-0f97a1f0]:hover {\n    cursor: pointer;\n    border: 2px solid blue;\n    box-sizing: border-box;\n}\n.description[data-v-0f97a1f0]:hover {\n    cursor: pointer;\n    text-decoration: underline;\n}\n.description[data-v-0f97a1f0] {\n    margin-top: 17px;\n    font-family: 'Montserrat';\n    font-style: normal;\n    font-weight: 400;\n    font-size: 18px;\n    line-height: 22px;\n}\n.author[data-v-0f97a1f0] {\n    font-size: 14px;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.outer[data-v-0f97a1f0] {\n    height: 360px;\n}\n.avatar[data-v-0f97a1f0] {\n    height: 260px;\n    border: 2px solid transparent;\n    box-sizing: border-box;\n}\n.avatar img[data-v-0f97a1f0] {\n    width: 100%;\n    height: 100%;\n}\n.avatar[data-v-0f97a1f0]:hover {\n    cursor: pointer;\n    border: 2px solid blue;\n    box-sizing: border-box;\n}\n.description[data-v-0f97a1f0]:hover {\n    cursor: pointer;\n    text-decoration: underline;\n}\n.description[data-v-0f97a1f0] {\n    margin-top: 17px;\n    font-family: 'Montserrat';\n    font-style: normal;\n    font-weight: 400;\n    font-size: 18px;\n    line-height: 22px;\n}\n.author[data-v-0f97a1f0] {\n    font-size: 14px;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -35173,7 +35157,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n#btnMore[data-v-c65cfbc2], #btnBack[data-v-c65cfbc2] {\n    border: 2px solid black;\n    box-sizing: border-box;\n    border-radius: 10px;\n\n    font-family: 'Montserrat';\n    font-style: normal;\n    font-weight: 400;\n    font-size: 18px;\n    line-height: 22px;\n\n    margin-top: 80.23px;\n    padding: 24px;\n}\n\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.v-wrapper[data-v-c65cfbc2] {\n    height: 1428px;\n    overflow: hidden;\n}\n#btnMore[data-v-c65cfbc2], #btnBack[data-v-c65cfbc2] {\n    border: 2px solid black;\n    box-sizing: border-box;\n    border-radius: 10px;\n\n    font-family: 'Montserrat';\n    font-style: normal;\n    font-weight: 400;\n    font-size: 18px;\n    line-height: 22px;\n\n    margin-top: 80.23px;\n    padding: 24px;\n    min-width: 202px;\n}\n.v-gallery[data-v-c65cfbc2] {\n    transition: all ease 0.5s;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

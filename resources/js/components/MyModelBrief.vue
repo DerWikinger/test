@@ -41,6 +41,10 @@ export default {
 </script>
 
 <style scoped>
+.outer {
+    height: 360px;
+}
+
 .avatar {
     height: 260px;
     border: 2px solid transparent;
