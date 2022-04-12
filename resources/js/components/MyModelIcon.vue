@@ -22,7 +22,7 @@ export default {
 <style scoped>
 .item {
     display: inline-block;
-    height: 200px;
+    height: 150px;
     width: 200px;
     min-width: 200px;
     border: none;

@@ -1,12 +1,21 @@
 <template>
         <div class="wrapper">
             <div class="slider" :style="{ 'margin-left': '-' + (100 + (200 * currentPosition)) + 'px' }">
-                <my-model-icon v-for="myModel in this.myModels" :key="myModel.id"
+                <my-model-icon v-for="myModel in this.forwardCollection" :key="myModel.id"
                                :image="myModel.image">
                 </my-model-icon>
             </div>
-            <button class="btnPrev" @click="prevItem">Prev</button>
-            <button class="btnNext" @click="nextItem">Next</button>
+            <div class="slider" :style="{ 'margin-left': '-' + (100 + (200 * currentPosition)) + 'px' }">
+                <my-model-icon v-for="myModel in this.reverseCollection" :key="myModel.id"
+                               :image="myModel.image">
+                </my-model-icon>
+            </div>
+            <div class="btnPrev" @click="prevItem">
+                <img src="/storage/svg/left_icon-icons.com_61213.svg" alt="">
+            </div>
+            <div class="btnNext" @click="nextItem">
+                <img src="/storage/svg/right_icon-icons.com_61212.svg" alt="">
+            </div>
         </div>
 </template>
 
@@ -23,7 +32,10 @@ export default {
         MyModelIcon,
     },
     mounted() {
-
+        for(let i = 0; i < this.myModels.length; i++) {
+            this.forwardCollection.push(this.myModels[i]);
+            this.reverseCollection.push(this.myModels[this.myModels.length - (i+1)]);
+        }
     },
     methods: {
         prevItem() {
@@ -62,12 +74,16 @@ export default {
     transition: all ease 0.5s;
 }
 
+.btnPrev img, .btnNext img {
+    height: 100%;
+}
+
 .btnPrev, .btnNext {
     position: absolute;
     height: 100%;
-    width: 60px;
+    width: 80px;
     top: 0;
-    background: #1f2937;
+    background: transparent;
     opacity: 0;
 }
 
@@ -76,7 +92,8 @@ export default {
 }
 
 .btnPrev:hover, .btnNext:hover {
-    opacity: 0.4;
+    opacity: 0.8;
+    cursor: pointer;
 }
 
 </style>

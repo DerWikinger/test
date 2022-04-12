@@ -25196,7 +25196,12 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     MyModelIcon: _components_MyModelIcon__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
-  mounted: function mounted() {},
+  mounted: function mounted() {
+    for (var i = 0; i < this.myModels.length; i++) {
+      this.forwardCollection.push(this.myModels[i]);
+      this.reverseCollection.push(this.myModels[this.myModels.length - (i + 1)]);
+    }
+  },
   methods: {
     prevItem: function prevItem() {
       if (this.currentPosition >= this.slidedItemsCount) {
@@ -29779,6 +29784,28 @@ var _withScopeId = function _withScopeId(n) {
 var _hoisted_1 = {
   "class": "wrapper"
 };
+
+var _hoisted_2 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+    src: "/storage/svg/left_icon-icons.com_61213.svg",
+    alt: ""
+  }, null, -1
+  /* HOISTED */
+  );
+});
+
+var _hoisted_3 = [_hoisted_2];
+
+var _hoisted_4 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+    src: "/storage/svg/right_icon-icons.com_61212.svg",
+    alt: ""
+  }, null, -1
+  /* HOISTED */
+  );
+});
+
+var _hoisted_5 = [_hoisted_4];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_my_model_icon = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("my-model-icon");
 
@@ -29787,7 +29814,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     style: (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)({
       'margin-left': '-' + (100 + 200 * $data.currentPosition) + 'px'
     })
-  }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(this.myModels, function (myModel) {
+  }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(this.forwardCollection, function (myModel) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_my_model_icon, {
       key: myModel.id,
       image: myModel.image
@@ -29798,17 +29825,33 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* KEYED_FRAGMENT */
   ))], 4
   /* STYLE */
-  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    "class": "slider",
+    style: (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)({
+      'margin-left': '-' + (100 + 200 * $data.currentPosition) + 'px'
+    })
+  }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(this.reverseCollection, function (myModel) {
+    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_my_model_icon, {
+      key: myModel.id,
+      image: myModel.image
+    }, null, 8
+    /* PROPS */
+    , ["image"]);
+  }), 128
+  /* KEYED_FRAGMENT */
+  ))], 4
+  /* STYLE */
+  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "class": "btnPrev",
     onClick: _cache[0] || (_cache[0] = function () {
       return $options.prevItem && $options.prevItem.apply($options, arguments);
     })
-  }, "Prev"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  }, _hoisted_3), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "class": "btnNext",
     onClick: _cache[1] || (_cache[1] = function () {
       return $options.nextItem && $options.nextItem.apply($options, arguments);
     })
-  }, "Next")]);
+  }, _hoisted_5)]);
 }
 
 /***/ }),
@@ -35082,7 +35125,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.item[data-v-1d4f9a4a] {\n    display: inline-block;\n    height: 200px;\n    width: 200px;\n    min-width: 200px;\n    border: none;\n    box-sizing: border-box;\n}\n.item img[data-v-1d4f9a4a] {\n    width: 100%;\n    height: 100%;\n}\n/*.avatar:hover {*/\n/*    cursor: pointer;*/\n/*    border: 2px solid blue;*/\n/*    box-sizing: border-box;*/\n/*}*/\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.item[data-v-1d4f9a4a] {\n    display: inline-block;\n    height: 150px;\n    width: 200px;\n    min-width: 200px;\n    border: none;\n    box-sizing: border-box;\n}\n.item img[data-v-1d4f9a4a] {\n    width: 100%;\n    height: 100%;\n}\n/*.avatar:hover {*/\n/*    cursor: pointer;*/\n/*    border: 2px solid blue;*/\n/*    box-sizing: border-box;*/\n/*}*/\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -35106,7 +35149,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.wrapper[data-v-cacbde7a] {\n    padding: 0;\n    margin: 0;\n    position: relative;\n    width: 100%;\n    overflow: hidden;\n}\n.slider[data-v-cacbde7a] {\n    display: flex;\n    transition: all ease 0.5s;\n}\n.btnPrev[data-v-cacbde7a], .btnNext[data-v-cacbde7a] {\n    position: absolute;\n    height: 100%;\n    width: 60px;\n    top: 0;\n    background: #1f2937;\n    opacity: 0;\n}\n.btnNext[data-v-cacbde7a] {\n    right: 0;\n}\n.btnPrev[data-v-cacbde7a]:hover, .btnNext[data-v-cacbde7a]:hover {\n    opacity: 0.4;\n}\n\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.wrapper[data-v-cacbde7a] {\n    padding: 0;\n    margin: 0;\n    position: relative;\n    width: 100%;\n    overflow: hidden;\n}\n.slider[data-v-cacbde7a] {\n    display: flex;\n    transition: all ease 0.5s;\n}\n.btnPrev img[data-v-cacbde7a], .btnNext img[data-v-cacbde7a] {\n    height: 100%;\n}\n.btnPrev[data-v-cacbde7a], .btnNext[data-v-cacbde7a] {\n    position: absolute;\n    height: 100%;\n    width: 80px;\n    top: 0;\n    background: transparent;\n    opacity: 0;\n}\n.btnNext[data-v-cacbde7a] {\n    right: 0;\n}\n.btnPrev[data-v-cacbde7a]:hover, .btnNext[data-v-cacbde7a]:hover {\n    opacity: 0.8;\n    cursor: pointer;\n}\n\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
