@@ -1,5 +1,5 @@
 <template>
-    <div class="avatar px-0 py-0 mx-0 my-0">
+    <div class="item text-center">
         <img class="" :src="this.getSource()" alt="No image">
     </div>
 </template>
@@ -20,12 +20,14 @@ export default {
 </script>
 
 <style scoped>
-.avatar {
+.item {
+    display: inline-block;
     height: 200px;
-    border: 2px solid transparent;
+    min-width: 200px;
+    border: none;
     box-sizing: border-box;
 }
-.avatar img {
+.item img {
     width: 100%;
     height: 100%;
 }

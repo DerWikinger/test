@@ -1092,6 +1092,9 @@ select {
 .block {
   display: block;
 }
+.inline {
+  display: inline;
+}
 .flex {
   display: flex;
 }
@@ -1241,6 +1244,10 @@ select {
 }
 .list-disc {
   list-style-type: disc;
+}
+.columns-6 {
+  -moz-columns: 6;
+       columns: 6;
 }
 .grid-cols-6 {
   grid-template-columns: repeat(6, minmax(0, 1fr));
