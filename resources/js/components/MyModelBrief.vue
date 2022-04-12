@@ -34,7 +34,6 @@ export default {
     methods: {
         getSource() {
             // return '/storage/images/' + this.image;
-            // return 'http://95.179.188.38' + '/storage/models/01fywd0hzp107e8db24y0byx9x-8/62446ee699883_rapier_1.JPG';
             return 'http://95.179.188.38' + this.image;
         }
     }
@@ -43,7 +42,7 @@ export default {
 
 <style scoped>
 .avatar {
-    height: 200px;
+    height: 260px;
     border: 2px solid transparent;
 }
 .avatar img {
