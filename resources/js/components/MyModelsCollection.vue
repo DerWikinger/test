@@ -10,8 +10,11 @@
             </div>
             <div class="sort-block">
                 <span>Sort by</span>
-                <select name="sortBy" id="sortBy" class="border-0 pr-5 mr-1">
+                <select name="sortBy" id="sortBy" class="border-0 pr-5 mr-1" @change="onSortChange">
                     <option value="date">date</option>
+                    <option value="price">price</option>
+                    <option value="name">name</option>
+                    <option value="author">author</option>
                 </select>
             </div>
         </div>
@@ -68,6 +71,9 @@ export default {
                 this.end = true;
             }
             this.$emit('rolling', this.currentTopRow);
+        },
+        onSortChange() {
+
         }
     },
     data() {
