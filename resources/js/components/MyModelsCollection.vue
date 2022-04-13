@@ -1,23 +1,23 @@
 <template>
-    <div class="v-wrapper">
-        <div class="top-block flex justify-between my-10">
-            <div class="text-sm w-3/4">
-                <span class="text-3xl pr-4">[</span>
-                <span class="text-lg italic">Search within the collection</span>
-                <input class="text-lg border-0 py-0 w-60 focus:border-0" type="search" placeholder="___________________________">
-                <img class="mr-2 h-5" src="/storage/svg/glass.svg" alt="">
-                <span class="text-3xl pl-4">]</span>
-            </div>
-            <div class="sort-block">
-                <span>Sort by</span>
-                <select name="sortBy" id="sortBy" class="border-0 pr-5 mr-1" @change="onSortChange">
-                    <option value="date">date</option>
-                    <option value="price">price</option>
-                    <option value="name">name</option>
-                    <option value="author">author</option>
-                </select>
-            </div>
+    <div class="top-block flex justify-between my-10">
+        <div class="text-sm w-3/4">
+            <span class="text-3xl pr-4">[</span>
+            <span class="text-lg italic">Search within the collection</span>
+            <input class="text-lg border-0 py-0 w-60" @change="onSearchChange" type="search" placeholder="___________________________">
+            <img class="mr-2 h-5" src="/storage/svg/glass.svg" alt="">
+            <span class="text-3xl pl-4">]</span>
         </div>
+        <div class="sort-block">
+            <span>Sort by</span>
+            <select name="sortBy" id="sortBy" class="border-0 pr-5 mr-1" @change="onSortChange">
+                <option value="date">date</option>
+                <option value="price">price</option>
+                <option value="name">name</option>
+                <option value="author">author</option>
+            </select>
+        </div>
+    </div>
+    <div class="v-wrapper">
         <div class="v-gallery grid grid-cols-3 gap-y-0 gap-x-4 text-center" :style="{ 'margin-top': '-' + (360 * (currentTopRow-1)) + 'px' }">
             <div v-for="myModel in this.myModels" :key="myModel.id">
                 <my-model-brief
@@ -48,7 +48,7 @@ export default {
     watch: {
         currentRow(newValue, oldValue) {
             this.currentTopRow = newValue;
-            if(this.currentTopRow >= (this.totalRows - this.visibleRows)) {
+            if(this.currentTopRow > (this.totalRows - this.visibleRows)) {
                 this.end = true;
             } else {
                 this.end = false;
@@ -74,6 +74,9 @@ export default {
         },
         onSortChange() {
 
+        },
+        onSearchChange() {
+
         }
     },
     data() {
@@ -97,7 +100,6 @@ export default {
 .v-wrapper {
     height: 1071px;
     overflow: hidden;
-
 }
 
 #btnMore, #btnBack {

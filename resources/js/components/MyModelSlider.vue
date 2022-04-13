@@ -101,7 +101,8 @@ export default {
 }
 
 .btnPrev:hover, .btnNext:hover {
-    opacity: 0.8;
+    background: white;
+    opacity: 0.5;
     cursor: pointer;
 }
 
