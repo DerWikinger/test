@@ -7,68 +7,82 @@ import MyModelSlider from "@/components/MyModelSlider";
 defineProps({
     myModels: Object,
     collectionData: Object,
-    // currentRow: {type: Number, default: 1},
 });
 
 </script>
 
 <template>
     <Head title="Test1"/>
-    <div class="">
-        <my-model-slider :currentRow="this.currentRow" :my-models="this.myModels"
-                         @sliding="this.onSlide"></my-model-slider>
-    </div>
-    <div class="container mx-auto px-40 py-2">
-        <div class="nav py-6 text-xs">
-            <Link href="#" class="nav-link">All 3D Models</Link>
-            /
-            <Link href="#" class="nav-link">Collection: {{ collectionData.name }}</Link>
+    <div class="main-content">
+        <div class="">
+            <my-model-slider :currentRow="this.currentRow" :my-models="this.myModels"
+                             @sliding="this.onSlide"></my-model-slider>
         </div>
-        <div class="flex justify-between my-1">
-            <Link class="text-2xl font-semibold">{{ collectionData.name }}</Link>
-            <div class="flex justify-end text-sm">
-                <div class="flex justify-between text-sm pl-6">
-                    <p><img src="/storage/svg/eye.svg" alt=""></p>
-                    <p>&nbsp;</p>
-                    <p>
-                        {{
-                            (collectionData.views_count > 1000 ? collectionData.views_count / 1000 + 'k.' : collectionData.views_count)
-                        }}</p>
+        <div class="container mx-auto px-40 py-2">
+            <div class="nav py-6 text-xs">
+                <Link href="#" class="nav-link">All 3D Models</Link>
+                /
+                <Link href="#" class="nav-link">Collection: {{ collectionData.name }}</Link>
+            </div>
+            <div class="flex justify-between my-1">
+                <Link class="text-3xl font-semibold">{{ collectionData.name }}</Link>
+                <div class="flex justify-end text-sm">
+                    <div class="flex justify-between text-sm pl-6">
+                        <p><img class="mr-2" src="/storage/svg/eye.svg" alt=""></p>
+                        <p>&nbsp;</p>
+                        <p>
+                            {{
+                                (collectionData.views_count > 1000 ? collectionData.views_count / 1000 + 'k.' : collectionData.views_count)
+                            }}</p>
+                    </div>
+                    <div class="flex justify-between text-sm pl-6">
+                        <p><img class="mr-2" src="/storage/svg/like.svg" alt=""></p>
+                        <p>&nbsp;</p>
+                        <p>
+                            {{
+                                (collectionData.likes_count > 1000 ? collectionData.likes_count / 1000 + 'k.' : collectionData.likes_count)
+                            }}</p>
+                    </div>
+                    <div class="flex justify-between text-sm pl-6">
+                        <p><img class="mr-2" src="/storage/svg/dislike.svg" alt=""></p>
+                        <p>&nbsp;</p>
+                        <p>
+                            {{
+                                (collectionData.dislikes_count > 1000 ? collectionData.dislikes_count / 1000 + 'k.' : collectionData.dislikes_count)
+                            }}</p>
+                    </div>
+                    <Link class="pl-6">
+                        <img src="/storage/svg/send.svg" alt="">
+                    </Link>
+                    <Link class="pl-6">
+                        <img src="/storage/svg/more.svg" alt="">
+                    </Link>
                 </div>
-                <div class="flex justify-between text-sm pl-6">
-                    <p><img src="/storage/svg/like.svg" alt=""></p>
-                    <p>&nbsp;</p>
-                    <p>
-                        {{
-                            (collectionData.likes_count > 1000 ? collectionData.likes_count / 1000 + 'k.' : collectionData.likes_count)
-                        }}</p>
+            </div>
+            <Link class="flex">
+                <div class="text-lg font-semibold">
+                    <span class="font-normal">by&nbsp;</span>{{ 'Author' }}
                 </div>
-                <div class="flex justify-between text-sm pl-6">
-                    <p><img src="/storage/svg/dislike.svg" alt=""></p>
-                    <p>&nbsp;</p>
-                    <p>
-                        {{
-                            (collectionData.dislikes_count > 1000 ? collectionData.dislikes_count / 1000 + 'k.' : collectionData.dislikes_count)
-                        }}</p>
+            </Link>
+            <div class="flex justify-between mt-4 text-lg">
+                <div class="flex">
+                    {{ collectionData.description }}
                 </div>
-                <Link class="pl-6">
-                    <img src="/storage/svg/send.svg" alt="">
+                <button id="btnAdd" class="">
+                    Add to your collections
+                </button>
+            </div>
+            <div class="flex text-xs mt-10">
+                <Link v-if="(Array.isArray(collectionData.tags))" href="#" v-for="tag in collectionData.tags">
+                    <span>#{{ tag }}&nbsp;</span>
                 </Link>
-                <Link class="pl-6">
-                    <img src="/storage/svg/more.svg" alt="">
+                <Link v-else href="#">
+                    <span>#{{ collectionData.tags }}</span>
                 </Link>
             </div>
+            <my-models-collection :currentRow="this.currentRow"
+                                  :my-models="this.myModels" @rolling="this.onRoll"></my-models-collection>
         </div>
-        <Link class="flex">
-            <div class="text-lg font-semibold">
-                <span class="text-sm font-normal">by&nbsp;</span>{{ 'Author' }}
-            </div>
-        </Link>
-        <div class="h-20"></div>
-        <div class="h-20"></div>
-        <div class="h-20"></div>
-        <my-models-collection :currentRow="this.currentRow"
-                              :my-models="this.myModels" @rolling="this.onRoll"></my-models-collection>
     </div>
 </template>
 
@@ -94,6 +108,20 @@ export default {
 </script>
 
 <style scoped>
+
+.main-content * {
+    font-family: Montserrat;
+}
+
+#btnAdd {
+    width: 303px;
+    height: 68px;
+
+    border: 2px solid #000000;
+    box-sizing: border-box;
+    border-radius: 10px;
+}
+
 .bg-gray-100 {
     background-color: #f7fafc;
     background-color: rgba(247, 250, 252, var(--tw-bg-opacity));
