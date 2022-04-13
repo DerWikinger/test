@@ -3,10 +3,12 @@ import {Head, Link} from '@inertiajs/inertia-vue3';
 import MyModelsCollection from "@/components/MyModelsCollection";
 import MyModelIcon from "@/components/MyModelIcon";
 import MyModelSlider from "@/components/MyModelSlider";
+import OtherCollectionIcons from "@/components/OtherCollectionIcons";
 
 defineProps({
     myModels: Object,
     collectionData: Object,
+    collectionModels: Array,
 });
 
 </script>
@@ -32,7 +34,7 @@ defineProps({
                         <p>&nbsp;</p>
                         <p>
                             {{
-                                (collectionData.views_count > 1000 ? collectionData.views_count / 1000 + 'k.' : collectionData.views_count)
+                                (collectionData.views_count > 10000 ? collectionData.views_count / 10000 + 'k.' : collectionData.views_count)
                             }}</p>
                     </div>
                     <div class="flex justify-between text-sm pl-6">
@@ -40,7 +42,7 @@ defineProps({
                         <p>&nbsp;</p>
                         <p>
                             {{
-                                (collectionData.likes_count > 1000 ? collectionData.likes_count / 1000 + 'k.' : collectionData.likes_count)
+                                (collectionData.likes_count > 10000 ? collectionData.likes_count / 10000 + 'k.' : collectionData.likes_count)
                             }}</p>
                     </div>
                     <div class="flex justify-between text-sm pl-6">
@@ -48,7 +50,7 @@ defineProps({
                         <p>&nbsp;</p>
                         <p>
                             {{
-                                (collectionData.dislikes_count > 1000 ? collectionData.dislikes_count / 1000 + 'k.' : collectionData.dislikes_count)
+                                (collectionData.dislikes_count > 10000 ? collectionData.dislikes_count / 10000 + 'k.' : collectionData.dislikes_count)
                             }}</p>
                     </div>
                     <Link class="pl-6">
@@ -69,7 +71,7 @@ defineProps({
                     {{ collectionData.description }}
                 </div>
                 <button id="btnAdd" class="">
-                    Add to your collections
+                    Добавить в вашу коллекцию
                 </button>
             </div>
             <div class="flex text-xs mt-10">
@@ -82,6 +84,9 @@ defineProps({
             </div>
             <my-models-collection :currentRow="this.currentRow"
                                   :my-models="this.myModels" @rolling="this.onRoll"></my-models-collection>
+            <other-collection-icons :other-collection="this.collectionModels">
+
+            </other-collection-icons>
         </div>
     </div>
 </template>
@@ -111,6 +116,7 @@ export default {
 
 .main-content * {
     font-family: Montserrat;
+    background: white;
 }
 
 #btnAdd {
@@ -122,65 +128,4 @@ export default {
     border-radius: 10px;
 }
 
-.bg-gray-100 {
-    background-color: #f7fafc;
-    background-color: rgba(247, 250, 252, var(--tw-bg-opacity));
-}
-
-.border-gray-200 {
-    border-color: #edf2f7;
-    border-color: rgba(237, 242, 247, var(--tw-border-opacity));
-}
-
-.text-gray-400 {
-    color: #cbd5e0;
-    color: rgba(203, 213, 224, var(--tw-text-opacity));
-}
-
-.text-gray-500 {
-    color: #a0aec0;
-    color: rgba(160, 174, 192, var(--tw-text-opacity));
-}
-
-.text-gray-600 {
-    color: #718096;
-    color: rgba(113, 128, 150, var(--tw-text-opacity));
-}
-
-.text-gray-700 {
-    color: #4a5568;
-    color: rgba(74, 85, 104, var(--tw-text-opacity));
-}
-
-.text-gray-900 {
-    color: #1a202c;
-    color: rgba(26, 32, 44, var(--tw-text-opacity));
-}
-
-/*@media (prefers-color-scheme: dark) {*/
-/*    .dark\:bg-gray-800 {*/
-/*        background-color: #2d3748;*/
-/*        background-color: rgba(45, 55, 72, var(--tw-bg-opacity));*/
-/*    }*/
-
-/*    .dark\:bg-gray-900 {*/
-/*        background-color: #1a202c;*/
-/*        background-color: rgba(26, 32, 44, var(--tw-bg-opacity));*/
-/*    }*/
-
-/*    .dark\:border-gray-700 {*/
-/*        border-color: #4a5568;*/
-/*        border-color: rgba(74, 85, 104, var(--tw-border-opacity));*/
-/*    }*/
-
-/*    .dark\:text-white {*/
-/*        color: #fff;*/
-/*        color: rgba(255, 255, 255, var(--tw-text-opacity));*/
-/*    }*/
-
-/*    .dark\:text-gray-400 {*/
-/*        color: #cbd5e0;*/
-/*        color: rgba(203, 213, 224, var(--tw-text-opacity));*/
-/*    }*/
-/*}*/
 </style>

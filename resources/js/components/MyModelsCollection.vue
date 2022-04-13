@@ -1,19 +1,19 @@
 <template>
     <div class="top-block flex justify-between my-10">
-        <div class="text-sm w-3/4">
-            <span class="text-3xl pr-4">[</span>
-            <span class="text-lg italic">Search within the collection</span>
+        <div class="w-3/4">
+            <img class="mr-2 h-5" src="/storage/svg/left_bracket.svg" alt="">
+            <span class="text-lg italic">Искать внутри коллекции</span>
             <input class="text-lg border-0 py-0 w-60" @change="onSearchChange" type="search" placeholder="___________________________">
             <img class="mr-2 h-5" src="/storage/svg/glass.svg" alt="">
-            <span class="text-3xl pl-4">]</span>
+            <img class="mr-2 h-5" src="/storage/svg/right_bracket.svg" alt="">
         </div>
         <div class="sort-block">
-            <span>Sort by</span>
+            <span>Сортировать по</span>
             <select name="sortBy" id="sortBy" class="border-0 pr-5 mr-1" @change="onSortChange">
-                <option value="date">date</option>
-                <option value="price">price</option>
-                <option value="name">name</option>
-                <option value="author">author</option>
+                <option value="date">дате</option>
+                <option value="price">цене</option>
+                <option value="name">имени</option>
+                <option value="author">автору</option>
             </select>
         </div>
     </div>
@@ -128,6 +128,7 @@ export default {
     line-height: inherit;
     height: 100%;
     border: none;
+    background: white;
 }
 
 input:focus, input:focus-visible, select:focus, select:focus-visible {
