@@ -30,7 +30,7 @@ defineProps({
                 <Link class="text-3xl font-semibold">{{ collectionData.name }}</Link>
                 <div class="flex justify-end text-sm">
                     <div class="flex justify-between text-sm pl-6">
-                        <p><img class="mr-2" src="/storage/svg/eye.svg" alt=""></p>
+                        <p><img class="mr-2" src="/svg/eye.svg" alt=""></p>
                         <p>&nbsp;</p>
                         <p>
                             {{
@@ -38,7 +38,7 @@ defineProps({
                             }}</p>
                     </div>
                     <div class="flex justify-between text-sm pl-6">
-                        <p><img class="mr-2" src="/storage/svg/like.svg" alt=""></p>
+                        <p><img class="mr-2" src="/svg/like.svg" alt=""></p>
                         <p>&nbsp;</p>
                         <p>
                             {{
@@ -46,7 +46,7 @@ defineProps({
                             }}</p>
                     </div>
                     <div class="flex justify-between text-sm pl-6">
-                        <p><img class="mr-2" src="/storage/svg/dislike.svg" alt=""></p>
+                        <p><img class="mr-2" src="/svg/dislike.svg" alt=""></p>
                         <p>&nbsp;</p>
                         <p>
                             {{
@@ -54,10 +54,10 @@ defineProps({
                             }}</p>
                     </div>
                     <Link class="pl-6">
-                        <img src="/storage/svg/send.svg" alt="">
+                        <img src="/svg/send.svg" alt="">
                     </Link>
                     <Link class="pl-6">
-                        <img src="/storage/svg/more.svg" alt="">
+                        <img src="/svg/more.svg" alt="">
                     </Link>
                 </div>
             </div>

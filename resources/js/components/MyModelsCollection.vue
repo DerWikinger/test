@@ -1,11 +1,11 @@
 <template>
     <div class="top-block flex justify-between my-10">
         <div class="w-3/4">
-            <img class="mr-2 h-5" src="/storage/svg/left_bracket.svg" alt="">
+            <img class="mr-2 h-5" src="/svg/left_bracket.svg" alt="">
             <span class="text-lg italic">Искать внутри коллекции</span>
             <input class="text-lg border-0 py-0 w-60" @change="onSearchChange" type="search" placeholder="___________________________">
-            <img class="mr-2 h-5" src="/storage/svg/glass.svg" alt="">
-            <img class="mr-2 h-5" src="/storage/svg/right_bracket.svg" alt="">
+            <img class="mr-2 h-5" src="/svg/glass.svg" alt="">
+            <img class="mr-2 h-5" src="/svg/right_bracket.svg" alt="">
         </div>
         <div class="sort-block">
             <span>Сортировать по</span>
@@ -128,7 +128,6 @@ export default {
     line-height: inherit;
     height: 100%;
     border: none;
-    background: white;
 }
 
 input:focus, input:focus-visible, select:focus, select:focus-visible {

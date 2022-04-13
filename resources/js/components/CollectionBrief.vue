@@ -9,7 +9,7 @@
             </Link>
             <div class="flex justify-between text-sm pl-6">
                 <span class="mr-4">{{ this.itemsCount }}&nbsp;Моделей</span>
-                <p><img class="mr-2 -mt-1" src="/storage/svg/like.svg" alt=""></p>
+                <p><img class="mr-2 -mt-1" src="/svg/like.svg" alt=""></p>
                 <p>&nbsp;</p>
                 <p>
                     {{
