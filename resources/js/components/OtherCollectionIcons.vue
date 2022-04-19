@@ -1,6 +1,6 @@
 <template>
     <div class="flex justify-center text-center text-2xl mt-28 mb-16">
-        Другие коллекции подобные данной
+        Other collections like this one
     </div>
     <div class="v-wrapper">
         <div class="v-gallery grid grid-cols-3 gap-y-0 gap-x-4 text-center" :style="{ 'margin-top': '-' + (360 * (currentTopRow-1)) + 'px' }">
@@ -17,7 +17,7 @@
     <div class="flex justify-center mb-20">
 <!--        <button v-if="this.end" id="btnCollectionBack" class="" @click="onBackClick">Назад</button>-->
 <!--        <button v-if="!this.end && this.totalRows > this.visibleRows" id="btnCollectionMore" class="" @click="onMoreClick">Показать все</button>-->
-        <button id="btnCollectionMore" class="" @click="onMoreClick">Показать все</button>
+        <button id="btnCollectionMore" class="" @click="onMoreClick">Show all</button>
     </div>
 </template>
 

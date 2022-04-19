@@ -11,10 +11,10 @@
                 </my-model-icon>
             </div>
             <div class="btnPrev" @click="prevItem">
-                <img src="/storage/svg/left_icon-icons.com_61213.svg" alt="">
+                <img src="/svg/left_icon-icons.com_61213.svg" alt="">
             </div>
             <div class="btnNext" @click="nextItem">
-                <img src="/storage/svg/right_icon-icons.com_61212.svg" alt="">
+                <img src="/svg/right_icon-icons.com_61212.svg" alt="">
             </div>
         </div>
 </template>
@@ -27,7 +27,7 @@ export default {
         myModels: Object,
         slidedItemsCount: { type: Number, default: 3 },
         visibleItemsCount: { type: Number, default: 6 },
-        currentRow: {type: Number, default: 1 },
+        // currentRow: {type: Number, default: 1 },
     },
     watch: {
         currentRow(newValue, oldValue) {
@@ -47,13 +47,13 @@ export default {
         prevItem() {
             if(this.currentPosition >= this.slidedItemsCount) {
                 this.currentPosition -= this.slidedItemsCount;
-                this.$emit('sliding', this.currentPosition );
+                // this.$emit('sliding', this.currentPosition );
             }
         },
         nextItem() {
             if(this.currentPosition <= this.myModels.length - (this.visibleItemsCount + this.slidedItemsCount)) {
                 this.currentPosition += this.slidedItemsCount;
-                this.$emit('sliding', this.currentPosition );
+                // this.$emit('sliding', this.currentPosition );
             }
         }
     },

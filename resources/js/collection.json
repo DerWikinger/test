@@ -2,7 +2,7 @@
     "success":true,
     "data":{
         "collectionData":
-            {"id":1,"name":"test","description":"test","tags":"test","views_count":0,"likes_count":0,"dislikes_count":0,"image_path":"\/storage\/collections\/01fywd0hzp107e8db24y0byx9x-1\/1649412317.png"},
+            {"id":1,"name":"test","description":"test","tags":"test","views_count":12548,"likes_count":1890,"dislikes_count":49,"image_path":"\/storage\/collections\/01fywd0hzp107e8db24y0byx9x-1\/1649412317.png"},
         "collectionModels":[
             {"id":10,"model_name":"Rapier","price":0,"user_name":"Andrey Kovalev","image":"\/storage\/models\/01fywd0hzp107e8db24y0byx9x-8\/62446ee699883_rapier_1.JPG"},
             {"id":8,"model_name":"Rapier","price":0,"user_name":"Andrey Kovalev","image":"\/storage\/models\/01fywd0hzp107e8db24y0byx9x-8\/62446ee28885e_rapier_3.JPG"}

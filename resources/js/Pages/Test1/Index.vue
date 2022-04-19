@@ -29,35 +29,35 @@ defineProps({
             <div class="flex justify-between my-1">
                 <Link class="text-3xl font-semibold">{{ collectionData.name }}</Link>
                 <div class="flex justify-end text-sm">
-                    <div class="flex justify-between text-sm pl-6">
-                        <p><img class="mr-2" src="/svg/eye.svg" alt=""></p>
+                    <div class="flex justify-between text-sm">
+                        <p><img class="h-4" src="/svg/eye.svg" alt=""></p>
                         <p>&nbsp;</p>
-                        <p>
+                        <p class="mx-1 w-12">
                             {{
-                                (collectionData.views_count > 10000 ? collectionData.views_count / 10000 + 'k.' : collectionData.views_count)
+                                (collectionData.views_count > 10000 ? Math.trunc(collectionData.views_count / 1000) + 'k.' : collectionData.views_count)
                             }}</p>
                     </div>
-                    <div class="flex justify-between text-sm pl-6">
-                        <p><img class="mr-2" src="/svg/like.svg" alt=""></p>
+                    <div class="flex justify-between text-sm">
+                        <p><img class="ml-6 h-5" src="/svg/like.svg" alt=""></p>
                         <p>&nbsp;</p>
-                        <p>
+                        <p class="ml-0 w-12 mr-2">
                             {{
-                                (collectionData.likes_count > 10000 ? collectionData.likes_count / 10000 + 'k.' : collectionData.likes_count)
+                                (collectionData.likes_count > 10000 ? Math.trunc(collectionData.likes_count / 1000) + 'k.' : collectionData.likes_count)
                             }}</p>
                     </div>
-                    <div class="flex justify-between text-sm pl-6">
-                        <p><img class="mr-2" src="/svg/dislike.svg" alt=""></p>
+                    <div class="flex justify-between text-sm">
+                        <p><img class="h-5" src="/svg/dislike.svg" alt=""></p>
                         <p>&nbsp;</p>
-                        <p>
+                        <p class="ml-0 w-12 mr-2">
                             {{
-                                (collectionData.dislikes_count > 10000 ? collectionData.dislikes_count / 10000 + 'k.' : collectionData.dislikes_count)
+                                (collectionData.dislikes_count > 10000 ? Math.trunc(collectionData.dislikes_count / 1000) + 'k.' : collectionData.dislikes_count)
                             }}</p>
                     </div>
-                    <Link class="pl-6">
-                        <img src="/svg/send.svg" alt="">
+                    <Link class="">
+                        <img class="h-5 mr-8" src="/svg/send.svg" alt="">
                     </Link>
-                    <Link class="pl-6">
-                        <img src="/svg/more.svg" alt="">
+                    <Link class="">
+                        <img class="h-5" src="/svg/more.svg" alt="">
                     </Link>
                 </div>
             </div>
@@ -71,7 +71,7 @@ defineProps({
                     {{ collectionData.description }}
                 </div>
                 <button id="btnAdd" class="">
-                    Добавить в вашу коллекцию
+                    Add to your collections
                 </button>
             </div>
             <div class="flex text-xs mt-10">
