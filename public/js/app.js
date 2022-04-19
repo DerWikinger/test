@@ -25314,44 +25314,42 @@ __webpack_require__.r(__webpack_exports__);
     myModels: Object,
     visibleRows: {
       type: Number,
-      "default": 3
-    } // currentRow: {type: Number, default: 1},
-
-  },
-  watch: {
-    currentRow: function currentRow(newValue, oldValue) {
-      this.currentTopRow = newValue;
-
-      if (this.currentTopRow > this.totalRows - this.visibleRows) {
-        this.end = true;
-      } else {
-        this.end = false;
-      }
+      "default": 4
     }
   },
   components: {
     MyModelBrief: _components_MyModelBrief__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
+  mounted: function mounted() {
+    var elem = document.getElementsByClassName('grid-row').item(0);
+    this.rowHeight = elem ? elem.clientHeight : 360;
+    this.rowsCount = this.minVisibleRows;
+  },
   methods: {
-    onBackClick: function onBackClick() {
-      if (this.currentTopRow > 1) {
-        this.currentTopRow = 1;
-        this.end = false; // this.$emit('rolling', this.currentTopRow);
-      }
-    },
     onMoreClick: function onMoreClick() {
-      if (this.currentTopRow++ >= this.totalRows - this.visibleRows) {
-        this.end = true;
-      } // this.$emit('rolling', this.currentTopRow);
+      var btn = document.getElementById('btnMore');
 
+      if (++this.rowsCount > this.totalRows) {
+        this.rowsCount = this.minVisibleRows;
+      }
+
+      if (this.rowsCount == this.totalRows) {
+        setTimeout(function (button) {
+          button.innerHTML = 'Return';
+        }, 1000, btn);
+      } else {
+        btn.innerHTML = 'Show more 3';
+      }
+
+      console.log(this.rowHeight);
     },
     onSortChange: function onSortChange() {},
     onSearchChange: function onSearchChange() {}
   },
   data: function data() {
     return {
-      currentTopRow: 1,
-      end: false
+      rowHeight: 360,
+      rowsCount: 1
     };
   },
   computed: {
@@ -25359,6 +25357,9 @@ __webpack_require__.r(__webpack_exports__);
       var r = Math.trunc(this.myModels.length / 3);
       if (this.myModels.length % 3) r += 1;
       return r;
+    },
+    minVisibleRows: function minVisibleRows() {
+      return Math.min(this.totalRows, this.visibleRows);
     }
   }
 });
@@ -30388,7 +30389,7 @@ var _hoisted_11 = /*#__PURE__*/_withScopeId(function () {
 
 var _hoisted_12 = [_hoisted_8, _hoisted_9, _hoisted_10, _hoisted_11];
 var _hoisted_13 = {
-  "class": "v-wrapper"
+  "class": "v-gallery grid grid-cols-3 gap-y-0 gap-x-4 text-center"
 };
 var _hoisted_14 = {
   "class": "flex justify-center"
@@ -30415,14 +30416,15 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     })
   }, _hoisted_12, 32
   /* HYDRATE_EVENTS */
-  )])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-    "class": "v-gallery grid grid-cols-3 gap-y-0 gap-x-4 text-center",
+  )])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    "class": "v-wrapper",
     style: (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)({
-      'margin-top': '-' + 360 * ($data.currentTopRow - 1) + 'px'
+      'height': $data.rowHeight * $data.rowsCount + 'px'
     })
-  }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(this.myModels, function (myModel) {
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(this.myModels, function (myModel) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
-      key: myModel.id
+      key: myModel.id,
+      "class": "grid-row"
     }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_my_model_brief, {
       name: myModel.model_name,
       price: myModel.price,
@@ -30433,20 +30435,13 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     , ["name", "price", "image", "username"])]);
   }), 128
   /* KEYED_FRAGMENT */
-  ))], 4
+  ))])], 4
   /* STYLE */
-  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [this.end ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
+  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [this.totalRows > this.visibleRows ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
     key: 0,
-    id: "btnBack",
-    "class": "",
-    onClick: _cache[2] || (_cache[2] = function () {
-      return $options.onBackClick && $options.onBackClick.apply($options, arguments);
-    })
-  }, "Return")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), !this.end && this.totalRows > this.visibleRows ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
-    key: 1,
     id: "btnMore",
     "class": "",
-    onClick: _cache[3] || (_cache[3] = function () {
+    onClick: _cache[2] || (_cache[2] = function () {
       return $options.onMoreClick && $options.onMoreClick.apply($options, arguments);
     })
   }, "Show more 3")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])], 64
@@ -35804,7 +35799,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.v-wrapper[data-v-c65cfbc2] {\n    height: 1071px;\n    overflow: hidden;\n}\n#btnMore[data-v-c65cfbc2], #btnBack[data-v-c65cfbc2] {\n    border: 2px solid black;\n    box-sizing: border-box;\n    border-radius: 10px;\n\n    font-family: 'Montserrat';\n    font-style: normal;\n    font-weight: 400;\n    font-size: 18px;\n    line-height: 22px;\n\n    margin-top: 80.23px;\n    padding: 24px;\n    min-width: 202px;\n}\n.v-gallery[data-v-c65cfbc2] {\n    transition: all ease 0.5s;\n}\n.top-block *[data-v-c65cfbc2], .sort-block *[data-v-c65cfbc2] {\n    display: inline;\n    vertical-align: middle;\n    line-height: inherit;\n    height: 100%;\n    /*border: none;*/\n}\n\n/*#search-block {*/\n/*    display: inline-block;*/\n/*}*/\n\n/*#search-block::after {*/\n/*    content: 'L';*/\n/*    !*display: inline-block;*!*/\n/*    !*position: relative;*!*/\n/*    !*left: 10px;*!*/\n/*    width: 100px;*/\n/*    line-height: inherit;*/\n/*    height: 100px;*/\n/*    background: red;*/\n/*    !*color: green;*!*/\n/*}*/\ninput[data-v-c65cfbc2]:focus, input[data-v-c65cfbc2]:focus-visible, select[data-v-c65cfbc2]:focus, select[data-v-c65cfbc2]:focus-visible {\n    box-shadow: none;\n}\n.sort-block[data-v-c65cfbc2] {\n    height: inherit;\n}\n\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.v-wrapper[data-v-c65cfbc2] {\n    overflow: hidden;\n    transition: all ease 1s;\n}\n#btnMore[data-v-c65cfbc2] {\n    border: 2px solid black;\n    box-sizing: border-box;\n    border-radius: 10px;\n\n    font-family: 'Montserrat';\n    font-style: normal;\n    font-weight: 400;\n    font-size: 18px;\n    line-height: 22px;\n\n    margin-top: 80.23px;\n    padding: 24px;\n    min-width: 202px;\n}\n.top-block *[data-v-c65cfbc2], .sort-block *[data-v-c65cfbc2] {\n    display: inline;\n    vertical-align: middle;\n    line-height: inherit;\n    height: 100%;\n}\ninput[data-v-c65cfbc2]:focus, input[data-v-c65cfbc2]:focus-visible, select[data-v-c65cfbc2]:focus, select[data-v-c65cfbc2]:focus-visible {\n    box-shadow: none;\n}\n.sort-block[data-v-c65cfbc2] {\n    height: inherit;\n}\n\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

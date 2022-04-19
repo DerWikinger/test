@@ -18,9 +18,9 @@
             </select>
         </div>
     </div>
-    <div class="v-wrapper">
-        <div class="v-gallery grid grid-cols-3 gap-y-0 gap-x-4 text-center" :style="{ 'margin-top': '-' + (360 * (currentTopRow-1)) + 'px' }">
-            <div v-for="myModel in this.myModels" :key="myModel.id">
+    <div class="v-wrapper" :style="{ 'height': (rowHeight * rowsCount) + 'px' }">
+        <div class="v-gallery grid grid-cols-3 gap-y-0 gap-x-4 text-center">
+            <div v-for="myModel in this.myModels" :key="myModel.id" class="grid-row">
                 <my-model-brief
                     :name="myModel.model_name"
                     :price="myModel.price"
@@ -31,8 +31,7 @@
         </div>
     </div>
     <div class="flex justify-center">
-        <button v-if="this.end" id="btnBack" class="" @click="onBackClick">Return</button>
-        <button v-if="!this.end && this.totalRows > this.visibleRows" id="btnMore" class="" @click="onMoreClick">Show more 3</button>
+        <button v-if="this.totalRows > this.visibleRows" id="btnMore" class="" @click="onMoreClick">Show more 3</button>
     </div>
 </template>
 
@@ -43,35 +42,30 @@ export default {
     name: "MyModelsCollection",
     props: {
         myModels: Object,
-        visibleRows: {type: Number, default: 3},
-        // currentRow: {type: Number, default: 1},
-    },
-    watch: {
-        currentRow(newValue, oldValue) {
-            this.currentTopRow = newValue;
-            if(this.currentTopRow > (this.totalRows - this.visibleRows)) {
-                this.end = true;
-            } else {
-                this.end = false;
-            }
-        }
+        visibleRows: {type: Number, default: 4},
     },
     components: {
         MyModelBrief
     },
+    mounted() {
+        let elem = document.getElementsByClassName('grid-row').item(0);
+        this.rowHeight = elem ? elem.clientHeight : 360;
+        this.rowsCount = this.minVisibleRows;
+    },
     methods: {
-        onBackClick() {
-            if(this.currentTopRow > 1) {
-                this.currentTopRow = 1;
-                this.end = false;
-                // this.$emit('rolling', this.currentTopRow);
-            }
-        },
         onMoreClick() {
-            if(this.currentTopRow++ >= (this.totalRows - this.visibleRows)) {
-                this.end = true;
+            let btn = document.getElementById('btnMore');
+            if (++this.rowsCount > this.totalRows) {
+                this.rowsCount = this.minVisibleRows;
             }
-            // this.$emit('rolling', this.currentTopRow);
+            if (this.rowsCount == this.totalRows) {
+                setTimeout(function (button) {
+                    button.innerHTML = 'Return';
+                }, 1000, btn);
+            } else {
+                btn.innerHTML = 'Show more 3';
+            }
+            console.log(this.rowHeight);
         },
         onSortChange() {
 
@@ -82,8 +76,8 @@ export default {
     },
     data() {
         return {
-            currentTopRow: 1,
-            end: false,
+            rowHeight: 360,
+            rowsCount: 1,
         }
     },
     computed: {
@@ -91,7 +85,10 @@ export default {
             let r = Math.trunc(this.myModels.length / 3);
             if (this.myModels.length % 3) r += 1;
             return r;
-        }
+        },
+        minVisibleRows() {
+            return Math.min(this.totalRows, this.visibleRows);
+        },
     }
 }
 </script>
@@ -99,11 +96,11 @@ export default {
 <style scoped>
 
 .v-wrapper {
-    height: 1071px;
     overflow: hidden;
+    transition: all ease 1s;
 }
 
-#btnMore, #btnBack {
+#btnMore {
     border: 2px solid black;
     box-sizing: border-box;
     border-radius: 10px;
@@ -119,33 +116,12 @@ export default {
     min-width: 202px;
 }
 
-.v-gallery {
-    transition: all ease 0.5s;
-}
-
 .top-block *, .sort-block * {
     display: inline;
     vertical-align: middle;
     line-height: inherit;
     height: 100%;
-    /*border: none;*/
 }
-
-/*#search-block {*/
-/*    display: inline-block;*/
-/*}*/
-
-/*#search-block::after {*/
-/*    content: 'L';*/
-/*    !*display: inline-block;*!*/
-/*    !*position: relative;*!*/
-/*    !*left: 10px;*!*/
-/*    width: 100px;*/
-/*    line-height: inherit;*/
-/*    height: 100px;*/
-/*    background: red;*/
-/*    !*color: green;*!*/
-/*}*/
 
 input:focus, input:focus-visible, select:focus, select:focus-visible {
     box-shadow: none;
