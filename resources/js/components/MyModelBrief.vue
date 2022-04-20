@@ -1,7 +1,7 @@
 <template>
     <div class="outer">
-        <div class="avatar flex justify-center">
-            <img class="" :style="{ 'background' : backgroundColor }" :src="this.getSource()" alt="No image">
+        <div class="avatar flex justify-center" :style="{ 'backgroundColor' : this.backgroundColor }">
+            <img class="" :src="this.getSource()" alt="No image">
         </div>
         <div class="description">
             <div class="flex justify-between">
@@ -38,24 +38,14 @@ export default {
             return '/storage/images/' + this.image;
             // return 'http://95.179.188.38' + this.image;
         },
-        getBackgroundColor() {
-            let fac = new FastAverageColor(),
-                container = document.querySelector('div.avatar');
-            // color = fac.getColor(container.querySelector('img'));
-            console.dir('Container: ', container);
-            return 'transparent';
-        },
     },
     mounted() {
         let fac = new FastAverageColor(),
-            container = document.querySelector('div.avatar'),
             self = this;
-
-        fac.getColorAsync(container.querySelector('img')).then(function (color) {
-            console.log('Color: ', color);
-            self.backgroundColor = color ?? 'transparent';
+        fac.getColorAsync(this.getSource()).then(function (color) {
+            self.backgroundColor = color.hex ?? 'transparent';
         }).catch(function (error) {
-            // console.log('Error: ', error);
+            console.log('Error: ', error);
             self.backgroundColor = 'transparent';
         });
     },
@@ -77,11 +67,15 @@ export default {
     height: 260px;
     border: 2px solid transparent;
     box-sizing: border-box;
+    display: flex;
+    overflow: hidden;
+    justify-content: center;
+    align-items: center;
 }
 
 .avatar img {
-    width: auto;
-    height: 100%;
+    width: 100%;
+    height: auto;
 }
 
 .avatar:hover {
