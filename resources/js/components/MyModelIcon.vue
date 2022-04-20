@@ -12,8 +12,8 @@ export default {
     },
     methods: {
         getSource() {
-            // return '/storage/images/' + this.image;
-            return 'http://95.179.188.38' + this.image;
+            return '/storage/images/' + this.image;
+            // return 'http://95.179.188.38' + this.image;
         }
     }
 }

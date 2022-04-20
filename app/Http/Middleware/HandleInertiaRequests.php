@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\MyModel;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -38,7 +39,7 @@ class HandleInertiaRequests extends Middleware
     {
         $data = json_decode(file_get_contents('/home/vitaly/PhpstormProjects/test/resources/js/collection.json'));
         return array_merge(parent::share($request), [
-            'myModels' => collect($data->data->modelsData),
+            'myModels' => MyModel::all(),
         ]);
     }
 }

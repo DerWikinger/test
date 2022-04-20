@@ -22,10 +22,10 @@
         <div class="v-gallery grid grid-cols-3 gap-y-0 gap-x-4 text-center">
             <div v-for="myModel in this.myModels" :key="myModel.id" class="grid-row">
                 <my-model-brief
-                    :name="myModel.model_name"
+                    :name="myModel.name"
                     :price="myModel.price"
                     :image="myModel.image"
-                    :username="myModel.user_name">
+                    :username="myModel.username">
                 </my-model-brief>
             </div>
         </div>
