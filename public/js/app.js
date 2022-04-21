@@ -25199,20 +25199,68 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     getSource: function getSource() {
       return '/storage/images/' + this.image; // return 'http://95.179.188.38' + this.image;
-    }
+    },
+    getBackgroundColor: function getBackgroundColor() {}
   },
-  mounted: function mounted() {
-    var fac = new fast_average_color__WEBPACK_IMPORTED_MODULE_0__["default"](),
-        self = this;
-    fac.getColorAsync(this.getSource()).then(function (color) {
-      var _color$hex;
-
-      self.backgroundColor = (_color$hex = color.hex) !== null && _color$hex !== void 0 ? _color$hex : 'transparent';
-    })["catch"](function (error) {
-      console.log('Error: ', error);
-      self.backgroundColor = 'transparent';
-    });
-  },
+  // mounted() {
+  //     let self = this;
+  //     let img = new Image();
+  //     let colorArray = [];
+  //
+  //     img.onload = function () {
+  //         let canvas = document.createElement("canvas");
+  //         canvas.width = img.naturalWidth;
+  //         canvas.height = img.naturalHeight;
+  //
+  //         let ctx = canvas.getContext("2d");
+  //         ctx.drawImage(this, 0, 0);
+  //
+  //         let rowStart = 0,
+  //             row10 = Math.trunc(img.naturalHeight / 10),
+  //             row90 = img.naturalHeight - row10,
+  //             rowEnd = img.naturalHeight;
+  //         let colStart = 0,
+  //             col10 = Math.trunc(img.naturalWidth / 10),
+  //             col90 = img.naturalWidth - col10,
+  //             colEnd = img.naturalWidth;
+  //
+  //         let imgData = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+  //
+  //         for (let r = rowStart; r < row10; r++) {
+  //             for (let c = colStart; c < col10 * 4; c += 4) {
+  //                 let i = r * colEnd + c;
+  //                 // let rgba = imgData[i] * 256 * 256 * 256 + imgData[i + 1] * 256 * 256 + imgData[i + 2] * 256 + imgData[i + 3];
+  //                 // let rgba = imgData[i+3] * 256 * 256 * 256 + imgData[i + 2] * 256 * 256 + imgData[i + 1] * 256 + imgData[i];
+  //                 let rgb = imgData[i] * 256 * 256 + imgData[i+1] * 256 + imgData[i+2];
+  //                 colorArray.push(rgb);
+  //             }
+  //         }
+  //
+  //         colorArray = colorArray.sort();
+  //         console.log(colorArray);
+  //
+  //         let moda = colorArray[0];
+  //         let maxCount = 1;
+  //         let count = 0;
+  //         let prevColor = colorArray[0];
+  //         colorArray.forEach(function (color) {
+  //             if (color == prevColor) {
+  //                 count++;
+  //             } else {
+  //                 count = 1;
+  //                 prevColor = color;
+  //             }
+  //             if (count > maxCount) {
+  //                 maxCount = count;
+  //                 moda = color;
+  //             }
+  //         });
+  //         console.log('Image: ', self.image, ' : ', '#' + moda.toString(16));
+  //         self.backgroundColor = '#' + moda.toString(16);
+  //     };
+  //
+  //     img.src = this.getSource();
+  // },
   data: function data() {
     return {
       backgroundColor: 'transparent'
@@ -30139,46 +30187,42 @@ var _withScopeId = function _withScopeId(n) {
 };
 
 var _hoisted_1 = {
-  "class": "outer"
+  "class": "wrapper"
 };
-var _hoisted_2 = ["src"];
-var _hoisted_3 = {
+var _hoisted_2 = {
+  "class": "avatar flex justify-center"
+};
+var _hoisted_3 = ["src"];
+var _hoisted_4 = {
   "class": "description"
 };
-var _hoisted_4 = {
-  "class": "flex justify-between"
-};
 var _hoisted_5 = {
-  "class": "title"
+  "class": "flex justify-between text-xl"
 };
 var _hoisted_6 = {
-  "class": "price font-semibold"
+  "class": "title"
 };
 var _hoisted_7 = {
-  "class": "flex"
+  "class": "price font-semibold"
 };
 var _hoisted_8 = {
-  "class": "author"
+  "class": "flex"
+};
+var _hoisted_9 = {
+  "class": "author text-md"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-    "class": "avatar flex justify-center",
-    style: (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)({
-      'backgroundColor': this.backgroundColor
-    })
-  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("        <div class=\"avatar flex justify-center\" :style=\"{ 'backgroundColor' : this.backgroundColor }\">"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
     "class": "",
     src: this.getSource(),
     alt: "No image"
   }, null, 8
   /* PROPS */
-  , _hoisted_2)], 4
-  /* STYLE */
-  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(this.name), 1
+  , _hoisted_3)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(this.name), 1
   /* TEXT */
-  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, " $" + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(this.price), 1
+  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, " $" + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(this.price), 1
   /* TEXT */
-  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, " by " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(this.username), 1
+  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, " by " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(this.username), 1
   /* TEXT */
   )])])]);
 }
@@ -35749,7 +35793,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.outer[data-v-0f97a1f0] {\n    height: 360px;\n}\n.avatar[data-v-0f97a1f0] {\n    height: 260px;\n    border: 2px solid transparent;\n    box-sizing: border-box;\n    display: flex;\n    overflow: hidden;\n    justify-content: center;\n    align-items: center;\n}\n.avatar img[data-v-0f97a1f0] {\n    width: 100%;\n    height: auto;\n}\n.avatar[data-v-0f97a1f0]:hover {\n    cursor: pointer;\n    border: 2px solid blue;\n    box-sizing: border-box;\n}\n.description[data-v-0f97a1f0]:hover {\n    cursor: pointer;\n    text-decoration: underline;\n}\n.description[data-v-0f97a1f0] {\n    margin-top: 17px;\n    font-family: 'Montserrat';\n    font-style: normal;\n    font-weight: 400;\n    font-size: 18px;\n    line-height: 22px;\n}\n.author[data-v-0f97a1f0] {\n    font-size: 14px;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.wrapper[data-v-0f97a1f0] {\n    height: 360px;\n}\n.avatar[data-v-0f97a1f0] {\n    height: 260px;\n    border: 2px solid transparent;\n    box-sizing: border-box;\n    display: flex;\n    overflow: hidden;\n    justify-content: center;\n    align-items: center;\n}\n.avatar img[data-v-0f97a1f0] {\n    width: auto;\n    height: 100%;\n    -o-object-fit: cover;\n       object-fit: cover;\n}\n.avatar[data-v-0f97a1f0]:hover {\n    cursor: pointer;\n    border: 2px solid blue;\n    box-sizing: border-box;\n}\n.description[data-v-0f97a1f0]:hover {\n    cursor: pointer;\n    text-decoration: underline;\n}\n.description[data-v-0f97a1f0] {\n    margin-top: 17px;\n    font-family: 'Montserrat';\n    font-style: normal;\n    font-weight: 400;\n    /*font-size: 18px;*/\n    line-height: 22px;\n}\n\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
