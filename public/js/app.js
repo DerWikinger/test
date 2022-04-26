@@ -30190,7 +30190,7 @@ var _hoisted_1 = {
   "class": "wrapper"
 };
 var _hoisted_2 = {
-  "class": "avatar flex justify-center"
+  "class": "avatar flex justify-center w-full"
 };
 var _hoisted_3 = ["src"];
 var _hoisted_4 = {
@@ -35793,7 +35793,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.wrapper[data-v-0f97a1f0] {\n    height: 360px;\n}\n.avatar[data-v-0f97a1f0] {\n    height: 260px;\n    border: 2px solid transparent;\n    box-sizing: border-box;\n    display: flex;\n    overflow: hidden;\n    justify-content: center;\n    align-items: center;\n}\n.avatar img[data-v-0f97a1f0] {\n    width: auto;\n    height: 100%;\n    -o-object-fit: cover;\n       object-fit: cover;\n}\n.avatar[data-v-0f97a1f0]:hover {\n    cursor: pointer;\n    border: 2px solid blue;\n    box-sizing: border-box;\n}\n.description[data-v-0f97a1f0]:hover {\n    cursor: pointer;\n    text-decoration: underline;\n}\n.description[data-v-0f97a1f0] {\n    margin-top: 17px;\n    font-family: 'Montserrat';\n    font-style: normal;\n    font-weight: 400;\n    /*font-size: 18px;*/\n    line-height: 22px;\n}\n\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.wrapper[data-v-0f97a1f0] {\n    height: 360px;\n}\n.avatar[data-v-0f97a1f0] {\n    height: 260px;\n    border: 2px solid transparent;\n    box-sizing: border-box;\n    display: flex;\n    overflow: hidden;\n    max-height: 260px;\n}\n.avatar img[data-v-0f97a1f0] {\n    width: 100%;\n    height: auto;\n    -o-object-fit: cover;\n       object-fit: cover;\n}\n.avatar[data-v-0f97a1f0]:hover {\n    cursor: pointer;\n    border: 2px solid blue;\n    box-sizing: border-box;\n}\n.description[data-v-0f97a1f0]:hover {\n    cursor: pointer;\n    text-decoration: underline;\n}\n.description[data-v-0f97a1f0] {\n    margin-top: 17px;\n    font-family: 'Montserrat';\n    font-style: normal;\n    font-weight: 400;\n    /*font-size: 18px;*/\n    line-height: 22px;\n}\n\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -35817,7 +35817,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.item[data-v-1d4f9a4a] {\n    display: inline-block;\n    height: 150px;\n    width: 200px;\n    min-width: 200px;\n    border: none;\n    box-sizing: border-box;\n}\n.item img[data-v-1d4f9a4a] {\n    width: 100%;\n    height: 100%;\n}\n/*.avatar:hover {*/\n/*    cursor: pointer;*/\n/*    border: 2px solid blue;*/\n/*    box-sizing: border-box;*/\n/*}*/\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.item[data-v-1d4f9a4a] {\n    display: flex;\n    height: 150px;\n    width: 200px;\n    min-width: 200px;\n    max-height: 150px;\n    border: none;\n    box-sizing: border-box;\n    overflow: hidden;\n    /*justify-content: center;*/\n    /*align-items: center;*/\n}\n.item img[data-v-1d4f9a4a] {\n    width: 100%;\n    height: auto;\n    -o-object-fit: cover;\n       object-fit: cover;\n}\n/*.avatar:hover {*/\n/*    cursor: pointer;*/\n/*    border: 2px solid blue;*/\n/*    box-sizing: border-box;*/\n/*}*/\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

@@ -21,16 +21,21 @@ export default {
 
 <style scoped>
 .item {
-    display: inline-block;
+    display: flex;
     height: 150px;
     width: 200px;
     min-width: 200px;
+    max-height: 150px;
     border: none;
     box-sizing: border-box;
+    overflow: hidden;
+    /*justify-content: center;*/
+    /*align-items: center;*/
 }
 .item img {
     width: 100%;
-    height: 100%;
+    height: auto;
+    object-fit: cover;
 }
 /*.avatar:hover {*/
 /*    cursor: pointer;*/

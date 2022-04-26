@@ -1,7 +1,7 @@
 <template>
     <div class="wrapper">
 <!--        <div class="avatar flex justify-center" :style="{ 'backgroundColor' : this.backgroundColor }">-->
-        <div class="avatar flex justify-center">
+        <div class="avatar flex justify-center w-full">
             <img class="" :src="this.getSource()" alt="No image">
         </div>
         <div class="description">
@@ -123,13 +123,12 @@ export default {
     box-sizing: border-box;
     display: flex;
     overflow: hidden;
-    justify-content: center;
-    align-items: center;
+    max-height: 260px;
 }
 
 .avatar img {
-    width: auto;
-    height: 100%;
+    width: 100%;
+    height: auto;
     object-fit: cover;
 }
 
