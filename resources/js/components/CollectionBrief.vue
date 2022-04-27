@@ -25,6 +25,9 @@ import {Link} from '@inertiajs/inertia-vue3';
 
 export default {
     name: "CollectionBrief",
+    components: {
+      Link,
+    },
     props: {
         // MyModel: Object,
         name: String,

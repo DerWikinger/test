@@ -25047,29 +25047,36 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_MyModelIcon__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/components/MyModelIcon */ "./resources/js/components/MyModelIcon.vue");
 /* harmony import */ var _components_MyModelSlider__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/components/MyModelSlider */ "./resources/js/components/MyModelSlider.vue");
 /* harmony import */ var _components_OtherCollectionIcons__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/components/OtherCollectionIcons */ "./resources/js/components/OtherCollectionIcons.vue");
+
+
+
+
+
 var __default__ = {
   name: 'Index',
+  components: {
+    MyModelsCollection: _components_MyModelsCollection__WEBPACK_IMPORTED_MODULE_1__["default"],
+    MyModelSlider: _components_MyModelSlider__WEBPACK_IMPORTED_MODULE_3__["default"],
+    MyModelIcon: _components_MyModelIcon__WEBPACK_IMPORTED_MODULE_2__["default"],
+    OtherCollectionIcons: _components_OtherCollectionIcons__WEBPACK_IMPORTED_MODULE_4__["default"],
+    Link: _inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_0__.Link,
+    Head: _inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_0__.Head
+  },
   methods: {
     onSlide: function onSlide(currentPosition) {
-      this.currentRow = Math.trunc(currentPosition / 3) + 1;
+      // this.currentRow = Math.trunc(currentPosition / 3) + 1;
       console.log(this.currentRow);
     },
     onRoll: function onRoll(currentTopRow) {
-      this.currentRow = currentTopRow;
+      // this.currentRow = currentTopRow;
       console.log('Current row: ', currentTopRow);
     }
   },
   data: function data() {
-    return {
-      currentRow: 1
+    return {// currentRow: 1,
     };
   }
 };
-
-
-
-
-
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (/*#__PURE__*/Object.assign(__default__, {
   props: {
     myModels: Object,
@@ -25149,6 +25156,9 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "CollectionBrief",
+  components: {
+    Link: _inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_0__.Link
+  },
   props: {
     // MyModel: Object,
     name: String,
@@ -25313,19 +25323,9 @@ __webpack_require__.r(__webpack_exports__);
   name: "MyModelSlider",
   props: {
     myModels: Object,
-    slidedItemsCount: {
+    slideTimeInterval: {
       type: Number,
-      "default": 3
-    },
-    visibleItemsCount: {
-      type: Number,
-      "default": 6
-    } // currentRow: {type: Number, default: 1 },
-
-  },
-  watch: {
-    currentRow: function currentRow(newValue, oldValue) {
-      this.currentPosition = (newValue - 1) * this.slidedItemsCount;
+      "default": 3000
     }
   },
   components: {
@@ -25336,25 +25336,65 @@ __webpack_require__.r(__webpack_exports__);
       this.forwardCollection.push(this.myModels[i]);
       this.reverseCollection.push(this.myModels[this.myModels.length - (i + 1)]);
     }
+
+    this.timeInterval = this.startSlider();
   },
   methods: {
+    onPrevClick: function onPrevClick() {
+      this.prevItem();
+      this.resetInterval();
+    },
+    onNextClick: function onNextClick() {
+      this.nextItem();
+      this.resetInterval();
+    },
     prevItem: function prevItem() {
-      if (this.currentPosition >= this.slidedItemsCount) {
-        this.currentPosition -= this.slidedItemsCount; // this.$emit('sliding', this.currentPosition );
+      var outerWidth = window.outerWidth;
+
+      if (Math.abs(this.currentMargin) > outerWidth / 2) {
+        var margin = outerWidth / 2;
+        var count = Math.trunc(margin / this.itemWidth);
+        this.currentMargin = this.currentMargin + count * this.itemWidth;
+      } else {
+        this.currentMargin = 0;
       }
     },
     nextItem: function nextItem() {
-      if (this.currentPosition <= this.myModels.length - (this.visibleItemsCount + this.slidedItemsCount)) {
-        this.currentPosition += this.slidedItemsCount; // this.$emit('sliding', this.currentPosition );
+      var elem = document.querySelector('div.wrapper'),
+          scrollWidth = elem.scrollWidth,
+          outerWidth = window.outerWidth;
+
+      if (scrollWidth > outerWidth) {
+        if (scrollWidth > outerWidth * 1.5) {
+          var margin = outerWidth / 2;
+          var count = Math.trunc(margin / this.itemWidth);
+          this.currentMargin = this.currentMargin - count * this.itemWidth;
+        } else {
+          this.currentMargin = this.currentMargin - (scrollWidth - outerWidth);
+        }
+      } else {
+        this.currentMargin = 0;
       }
+    },
+    resetInterval: function resetInterval() {
+      clearInterval(this.timeInterval);
+      var self = this;
+      setTimeout(function () {
+        self.timeInterval = self.startSlider();
+      }, this.timePause);
+    },
+    startSlider: function startSlider() {
+      return setInterval(this.nextItem, this.slideTimeInterval);
     }
   },
   data: function data() {
     return {
       forwardCollection: [],
       reverseCollection: [],
-      currentPosition: 0,
-      itemWidth: 200
+      currentMargin: 0,
+      itemWidth: 200,
+      timeInterval: 0,
+      timePause: 2000
     };
   }
 });
@@ -29714,10 +29754,10 @@ var _hoisted_1 = {
   "class": "main-content"
 };
 var _hoisted_2 = {
-  "class": ""
+  "class": "mt-20"
 };
 var _hoisted_3 = {
-  "class": "container mx-auto px-40 py-2"
+  "class": "container mx-auto px-10 py-2"
 };
 var _hoisted_4 = {
   "class": "nav py-6 text-xs"
@@ -29856,12 +29896,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["Head"], {
     title: "Test1"
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["MyModelSlider"], {
-    currentRow: this.currentRow,
-    "my-models": this.myModels,
-    onSliding: this.onSlide
+    "my-models": this.myModels
   }, null, 8
   /* PROPS */
-  , ["currentRow", "my-models", "onSliding"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["Link"], {
+  , ["my-models"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["Link"], {
     href: "#",
     "class": "nav-link"
   }, {
@@ -29961,12 +29999,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     /* STABLE */
 
   }))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["MyModelsCollection"], {
-    currentRow: this.currentRow,
-    "my-models": this.myModels,
-    onRolling: this.onRoll
+    "my-models": this.myModels
   }, null, 8
   /* PROPS */
-  , ["currentRow", "my-models", "onRolling"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["OtherCollectionIcons"], {
+  , ["my-models"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["OtherCollectionIcons"], {
     "other-collection": this.collectionModels
   }, null, 8
   /* PROPS */
@@ -30312,7 +30348,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "class": "slider",
     style: (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)({
-      'margin-left': '-' + ($data.itemWidth / 2 + $data.itemWidth * $data.currentPosition) + 'px'
+      'margin-left': $data.currentMargin + 'px'
     })
   }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(this.forwardCollection, function (myModel) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_my_model_icon, {
@@ -30328,7 +30364,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "class": "slider",
     style: (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)({
-      'margin-left': '-' + ($data.itemWidth / 2 + $data.itemWidth * $data.currentPosition) + 'px'
+      'margin-left': $data.currentMargin + 'px'
     })
   }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(this.reverseCollection, function (myModel) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_my_model_icon, {
@@ -30344,12 +30380,12 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "class": "btnPrev",
     onClick: _cache[0] || (_cache[0] = function () {
-      return $options.prevItem && $options.prevItem.apply($options, arguments);
+      return $options.onPrevClick && $options.onPrevClick.apply($options, arguments);
     })
   }, _hoisted_3), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "class": "btnNext",
     onClick: _cache[1] || (_cache[1] = function () {
-      return $options.nextItem && $options.nextItem.apply($options, arguments);
+      return $options.onNextClick && $options.onNextClick.apply($options, arguments);
     })
   }, _hoisted_5)]);
 }
@@ -30465,7 +30501,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [_hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     id: "myInput",
-    "class": "text-lg border-0 py-0 w-3/5 italic",
+    "class": "text-lg border-0 py-0 w-1/2 italic",
     onChange: _cache[0] || (_cache[0] = function () {
       return $options.onSearchChange && $options.onSearchChange.apply($options, arguments);
     }),
@@ -35841,7 +35877,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.wrapper[data-v-cacbde7a] {\n    padding: 0;\n    margin: 0;\n    position: relative;\n    width: 100%;\n    overflow: hidden;\n}\n.slider[data-v-cacbde7a] {\n    display: flex;\n    transition: all ease 0.5s;\n}\n.btnPrev img[data-v-cacbde7a], .btnNext img[data-v-cacbde7a] {\n    height: 100%;\n}\n.btnPrev[data-v-cacbde7a], .btnNext[data-v-cacbde7a] {\n    position: absolute;\n    height: 100%;\n    width: 80px;\n    top: 0;\n    background: transparent;\n    opacity: 0;\n}\n.btnNext[data-v-cacbde7a] {\n    right: 0;\n}\n.btnPrev[data-v-cacbde7a]:hover, .btnNext[data-v-cacbde7a]:hover {\n    background: white;\n    opacity: 0.5;\n    cursor: pointer;\n}\n\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.wrapper[data-v-cacbde7a] {\n    padding: 0;\n    margin: 0;\n    position: relative;\n    width: 100%;\n    overflow: hidden;\n}\n.slider[data-v-cacbde7a] {\n    display: flex;\n    transition: all ease 0.8s;\n}\n.btnPrev img[data-v-cacbde7a], .btnNext img[data-v-cacbde7a] {\n    height: 100%;\n}\n.btnPrev[data-v-cacbde7a], .btnNext[data-v-cacbde7a] {\n    position: absolute;\n    height: 100%;\n    width: 80px;\n    top: 0;\n    background: transparent;\n    opacity: 0;\n}\n.btnNext[data-v-cacbde7a] {\n    right: 0;\n}\n.btnPrev[data-v-cacbde7a]:hover, .btnNext[data-v-cacbde7a]:hover {\n    background: white;\n    opacity: 0.5;\n    cursor: pointer;\n}\n\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

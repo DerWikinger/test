@@ -1,9 +1,4 @@
 <script setup>
-import {Head, Link} from '@inertiajs/inertia-vue3';
-import MyModelsCollection from "@/components/MyModelsCollection";
-import MyModelIcon from "@/components/MyModelIcon";
-import MyModelSlider from "@/components/MyModelSlider";
-import OtherCollectionIcons from "@/components/OtherCollectionIcons";
 
 defineProps({
     myModels: Object,
@@ -16,11 +11,10 @@ defineProps({
 <template>
     <Head title="Test1"/>
     <div class="main-content">
-        <div class="">
-            <my-model-slider :currentRow="this.currentRow" :my-models="this.myModels"
-                             @sliding="this.onSlide"></my-model-slider>
+        <div class="mt-20">
+            <my-model-slider :my-models="this.myModels"></my-model-slider>
         </div>
-        <div class="container mx-auto px-40 py-2">
+        <div class="container mx-auto px-10 py-2">
             <div class="nav py-6 text-xs">
                 <Link href="#" class="nav-link">All 3D Models</Link>
                 /
@@ -82,8 +76,7 @@ defineProps({
                     <span>#{{ collectionData.tags }}</span>
                 </Link>
             </div>
-            <my-models-collection :currentRow="this.currentRow"
-                                  :my-models="this.myModels" @rolling="this.onRoll"></my-models-collection>
+            <my-models-collection :my-models="this.myModels"></my-models-collection>
             <other-collection-icons :other-collection="this.collectionModels">
 
             </other-collection-icons>
@@ -92,21 +85,35 @@ defineProps({
 </template>
 
 <script>
+import {Head, Link} from '@inertiajs/inertia-vue3';
+import MyModelsCollection from "@/components/MyModelsCollection";
+import MyModelIcon from "@/components/MyModelIcon";
+import MyModelSlider from "@/components/MyModelSlider";
+import OtherCollectionIcons from "@/components/OtherCollectionIcons";
+
 export default {
     name: 'Index',
+    components: {
+        MyModelsCollection,
+        MyModelSlider,
+        MyModelIcon,
+        OtherCollectionIcons,
+        Link,
+        Head,
+    },
     methods: {
         onSlide: function (currentPosition) {
-            this.currentRow = Math.trunc(currentPosition / 3) + 1;
+            // this.currentRow = Math.trunc(currentPosition / 3) + 1;
             console.log(this.currentRow);
         },
         onRoll: function (currentTopRow) {
-            this.currentRow = currentTopRow;
+            // this.currentRow = currentTopRow;
             console.log('Current row: ', currentTopRow);
         }
     },
     data() {
         return {
-            currentRow: 1,
+            // currentRow: 1,
         }
     }
 }
