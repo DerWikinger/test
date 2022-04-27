@@ -1,68 +1,97 @@
 <template>
-        <div class="wrapper">
-            <div class="slider" :style="{ 'margin-left': '-' + (itemWidth/2 + (itemWidth * currentPosition)) + 'px' }">
-                <my-model-icon v-for="myModel in this.forwardCollection" :key="myModel.id"
-                               :image="myModel.image">
-                </my-model-icon>
-            </div>
-            <div class="slider" :style="{ 'margin-left': '-' + (itemWidth/2 + (itemWidth * currentPosition)) + 'px' }">
-                <my-model-icon v-for="myModel in this.reverseCollection" :key="myModel.id"
-                               :image="myModel.image">
-                </my-model-icon>
-            </div>
-            <div class="btnPrev" @click="prevItem">
-                <img src="/svg/left_icon-icons.com_61213.svg" alt="">
-            </div>
-            <div class="btnNext" @click="nextItem">
-                <img src="/svg/right_icon-icons.com_61212.svg" alt="">
-            </div>
+    <div class="wrapper">
+        <div class="slider" :style="{ 'margin-left': (currentMargin) + 'px' }">
+            <my-model-icon v-for="myModel in this.forwardCollection" :key="myModel.id"
+                           :image="myModel.image">
+            </my-model-icon>
         </div>
+        <div class="slider" :style="{ 'margin-left': (currentMargin) + 'px' }">
+            <my-model-icon v-for="myModel in this.reverseCollection" :key="myModel.id"
+                           :image="myModel.image">
+            </my-model-icon>
+        </div>
+        <div class="btnPrev" @click="onPrevClick">
+            <img src="/svg/left_icon-icons.com_61213.svg" alt="">
+        </div>
+        <div class="btnNext" @click="onNextClick">
+            <img src="/svg/right_icon-icons.com_61212.svg" alt="">
+        </div>
+    </div>
 </template>
 
 <script>
 import MyModelIcon from "@/components/MyModelIcon";
+
 export default {
     name: "MyModelSlider",
     props: {
         myModels: Object,
-        slidedItemsCount: { type: Number, default: 3 },
-        visibleItemsCount: { type: Number, default: 6 },
-        // currentRow: {type: Number, default: 1 },
-    },
-    watch: {
-        currentRow(newValue, oldValue) {
-            this.currentPosition = (newValue - 1) * this.slidedItemsCount;
-        }
+        slideTimeInterval: {type: Number, default: 3000},
     },
     components: {
         MyModelIcon,
     },
     mounted() {
-        for(let i = 0; i < this.myModels.length; i++) {
+        for (let i = 0; i < this.myModels.length; i++) {
             this.forwardCollection.push(this.myModels[i]);
-            this.reverseCollection.push(this.myModels[this.myModels.length - (i+1)]);
+            this.reverseCollection.push(this.myModels[this.myModels.length - (i + 1)]);
         }
+        this.timeInterval = this.startSlider();
     },
     methods: {
+        onPrevClick() {
+            this.prevItem();
+            this.resetInterval();
+        },
+        onNextClick() {
+            this.nextItem();
+            this.resetInterval();
+        },
         prevItem() {
-            if(this.currentPosition >= this.slidedItemsCount) {
-                this.currentPosition -= this.slidedItemsCount;
-                // this.$emit('sliding', this.currentPosition );
+            let outerWidth = window.outerWidth;
+            if (Math.abs(this.currentMargin) > (outerWidth / 2)) {
+                let margin = outerWidth / 2;
+                let count = Math.trunc(margin / this.itemWidth);
+                this.currentMargin = this.currentMargin + (count * this.itemWidth);
+            } else {
+                this.currentMargin = 0;
             }
         },
         nextItem() {
-            if(this.currentPosition <= this.myModels.length - (this.visibleItemsCount + this.slidedItemsCount)) {
-                this.currentPosition += this.slidedItemsCount;
-                // this.$emit('sliding', this.currentPosition );
+            let elem = document.querySelector('div.wrapper'),
+                scrollWidth = elem.scrollWidth,
+                outerWidth = window.outerWidth;
+            if (scrollWidth > outerWidth) {
+                if (scrollWidth > outerWidth * 1.5) {
+                    let margin = outerWidth / 2;
+                    let count = Math.trunc(margin / this.itemWidth);
+                    this.currentMargin = this.currentMargin - (count * this.itemWidth);
+                } else {
+                    this.currentMargin = this.currentMargin - (scrollWidth - outerWidth);
+                }
+            } else {
+                this.currentMargin = 0;
             }
+        },
+        resetInterval() {
+            clearInterval(this.timeInterval);
+            let self = this;
+            setTimeout(function () {
+                self.timeInterval = self.startSlider();
+            }, this.timePause);
+        },
+        startSlider() {
+            return setInterval(this.nextItem, this.slideTimeInterval);
         }
     },
     data() {
         return {
             forwardCollection: [],
             reverseCollection: [],
-            currentPosition: 0,
+            currentMargin: 0,
             itemWidth: 200,
+            timeInterval: 0,
+            timePause: 2000,
         }
     }
 }
@@ -80,7 +109,7 @@ export default {
 
 .slider {
     display: flex;
-    transition: all ease 0.5s;
+    transition: all ease 0.8s;
 }
 
 .btnPrev img, .btnNext img {
