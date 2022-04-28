@@ -25376,8 +25376,9 @@ __webpack_require__.r(__webpack_exports__);
     resetInterval: function resetInterval() {
       clearInterval(this.timeInterval);
       var self = this;
-      setTimeout(function () {
+      this.timeOut = setTimeout(function () {
         self.timeInterval = self.startSlider();
+        clearTimeout(self.timeOut);
       }, this.timePause);
     },
     startSlider: function startSlider() {
@@ -25391,7 +25392,8 @@ __webpack_require__.r(__webpack_exports__);
       currentMargin: 0,
       itemWidth: 200,
       timeInterval: 0,
-      timePause: 2000
+      timePause: 2000,
+      timeOut: 0
     };
   }
 });

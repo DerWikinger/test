@@ -76,8 +76,9 @@ export default {
         resetInterval() {
             clearInterval(this.timeInterval);
             let self = this;
-            setTimeout(function () {
+            this.timeOut = setTimeout(function () {
                 self.timeInterval = self.startSlider();
+                clearTimeout(self.timeOut);
             }, this.timePause);
         },
         startSlider() {
@@ -92,6 +93,7 @@ export default {
             itemWidth: 200,
             timeInterval: 0,
             timePause: 2000,
+            timeOut: 0,
         }
     }
 }
