@@ -1,9 +1,9 @@
 <script setup>
 
 defineProps({
-    myModels: Object,
-    collectionData: Object,
-    collectionModels: Array,
+   myModels: Object,
+   collectionData: Object,
+   collectionModels: Array,
 });
 
 </script>
@@ -20,42 +20,16 @@ defineProps({
                 /
                 <Link href="#" class="nav-link">Collection: {{ collectionData.name }}</Link>
             </div>
-            <div class="flex justify-between my-1">
+            <div class="flex justify-between my-1 items-center">
                 <Link class="text-3xl font-semibold">{{ collectionData.name }}</Link>
-                <div class="flex justify-end text-sm">
-                    <div class="flex justify-between text-sm">
-                        <p><img class="h-4" src="/svg/eye.svg" alt=""></p>
-                        <p>&nbsp;</p>
-                        <p class="mx-1 w-12">
-                            {{
-                                (collectionData.views_count > 10000 ? Math.trunc(collectionData.views_count / 1000) + 'k.' : collectionData.views_count)
-                            }}</p>
-                    </div>
-                    <div class="flex justify-between text-sm">
-                        <p><img class="ml-6 h-5" src="/svg/like.svg" alt=""></p>
-                        <p>&nbsp;</p>
-                        <p class="ml-0 w-12 mr-2">
-                            {{
-                                (collectionData.likes_count > 10000 ? Math.trunc(collectionData.likes_count / 1000) + 'k.' : collectionData.likes_count)
-                            }}</p>
-                    </div>
-                    <div class="flex justify-between text-sm">
-                        <p><img class="h-5" src="/svg/dislike.svg" alt=""></p>
-                        <p>&nbsp;</p>
-                        <p class="ml-0 w-12 mr-2">
-                            {{
-                                (collectionData.dislikes_count > 10000 ? Math.trunc(collectionData.dislikes_count / 1000) + 'k.' : collectionData.dislikes_count)
-                            }}</p>
-                    </div>
-                    <Link class="">
-                        <img class="h-5 mr-8" src="/svg/send.svg" alt="">
-                    </Link>
-                    <Link class="">
-                        <img class="h-5" src="/svg/more.svg" alt="">
-                    </Link>
-                </div>
+                <view-like-dislike-block :views="this.collectionData.views_count"
+                              :likes="this.collectionData.likes_count"
+                              :dislikes="this.collectionData.dislikes_count"
+                              @send="this.onSend"
+                              @more="this.onMore">
+                </view-like-dislike-block>
             </div>
-            <Link class="flex">
+            <Link class="flex w-fit">
                 <div class="text-lg font-semibold">
                     <span class="font-normal">by&nbsp;</span>{{ 'Author' }}
                 </div>
@@ -90,6 +64,7 @@ import MyModelsCollection from "@/components/MyModelsCollection";
 import MyModelIcon from "@/components/MyModelIcon";
 import MyModelSlider from "@/components/MyModelSlider";
 import OtherCollectionIcons from "@/components/OtherCollectionIcons";
+import ViewLikeDislikeBlock from "@/components/ViewLikeDislikeBlock";
 
 export default {
     name: 'Index',
@@ -98,24 +73,19 @@ export default {
         MyModelSlider,
         MyModelIcon,
         OtherCollectionIcons,
-        Link,
+        ViewLikeDislikeBlock,
         Head,
+        Link,
     },
     methods: {
-        onSlide: function (currentPosition) {
-            // this.currentRow = Math.trunc(currentPosition / 3) + 1;
-            console.log(this.currentRow);
+        onMore: function () {
+            console.log('Button More is clicked');
         },
-        onRoll: function (currentTopRow) {
-            // this.currentRow = currentTopRow;
-            console.log('Current row: ', currentTopRow);
-        }
-    },
-    data() {
-        return {
-            // currentRow: 1,
-        }
+        onSend: function () {
+            console.log('Button Send is clicked');
+        },
     }
+
 }
 </script>
 
