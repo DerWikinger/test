@@ -1568,6 +1568,10 @@ select {
   padding-left: 2.5rem;
   padding-right: 2.5rem;
 }
+.px-0 {
+  padding-left: 0px;
+  padding-right: 0px;
+}
 .pt-6 {
   padding-top: 1.5rem;
 }

@@ -39,8 +39,7 @@ export default {
     },
     methods: {
         getSource() {
-            // return '/storage/images/' + this.image;
-            return 'http://95.179.188.38' + this.image;
+            return this.image;
         }
     }
 }
@@ -57,6 +56,7 @@ export default {
     height: 260px;
     border: 2px solid transparent;
     box-sizing: border-box;
+    overflow: hidden;
     outline: 1px dashed rgba(255, 255, 255, 0.2); /* Пунктирная рамка */
     outline-offset: -10px; /* Выводим рамку внутри элемента */
 }
@@ -64,6 +64,7 @@ export default {
 .avatar img {
     width: 100%;
     height: 100%;
+    object-fit: cover;
 }
 
 .avatar:hover {

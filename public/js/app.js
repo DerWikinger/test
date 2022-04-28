@@ -25176,8 +25176,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     getSource: function getSource() {
-      // return '/storage/images/' + this.image;
-      return 'http://95.179.188.38' + this.image;
+      return this.image;
     }
   }
 });
@@ -29757,7 +29756,7 @@ var _hoisted_2 = {
   "class": "mt-20"
 };
 var _hoisted_3 = {
-  "class": "container mx-auto px-10 py-2"
+  "class": "container mx-auto px-0 py-2"
 };
 var _hoisted_4 = {
   "class": "nav py-6 text-xs"
@@ -35805,7 +35804,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.collection-wrapper[data-v-138daae1] {\n    height: 300px;\n}\n.avatar[data-v-138daae1] {\n    display: block;\n    height: 260px;\n    border: 2px solid transparent;\n    box-sizing: border-box;\n    outline: 1px dashed rgba(255, 255, 255, 0.2); /* Пунктирная рамка */\n    outline-offset: -10px; /* Выводим рамку внутри элемента */\n}\n.avatar img[data-v-138daae1] {\n    width: 100%;\n    height: 100%;\n}\n.avatar[data-v-138daae1]:hover {\n    cursor: pointer;\n    border: 2px solid blue;\n    box-sizing: border-box;\n}\n.description *[data-v-138daae1] {\n    display: inline;\n    vertical-align: middle;\n    line-height: inherit;\n    height: 100%;\n    border: none;\n}\nLink[data-v-138daae1]:hover {\n    cursor: pointer;\n    text-decoration: underline;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.collection-wrapper[data-v-138daae1] {\n    height: 300px;\n}\n.avatar[data-v-138daae1] {\n    display: block;\n    height: 260px;\n    border: 2px solid transparent;\n    box-sizing: border-box;\n    overflow: hidden;\n    outline: 1px dashed rgba(255, 255, 255, 0.2); /* Пунктирная рамка */\n    outline-offset: -10px; /* Выводим рамку внутри элемента */\n}\n.avatar img[data-v-138daae1] {\n    width: 100%;\n    height: 100%;\n    -o-object-fit: cover;\n       object-fit: cover;\n}\n.avatar[data-v-138daae1]:hover {\n    cursor: pointer;\n    border: 2px solid blue;\n    box-sizing: border-box;\n}\n.description *[data-v-138daae1] {\n    display: inline;\n    vertical-align: middle;\n    line-height: inherit;\n    height: 100%;\n    border: none;\n}\nLink[data-v-138daae1]:hover {\n    cursor: pointer;\n    text-decoration: underline;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -35829,7 +35828,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.wrapper[data-v-0f97a1f0] {\n    height: 360px;\n}\n.avatar[data-v-0f97a1f0] {\n    height: 260px;\n    border: 2px solid transparent;\n    box-sizing: border-box;\n    display: flex;\n    overflow: hidden;\n    max-height: 260px;\n}\n.avatar img[data-v-0f97a1f0] {\n    width: 100%;\n    height: auto;\n    -o-object-fit: cover;\n       object-fit: cover;\n}\n.avatar[data-v-0f97a1f0]:hover {\n    cursor: pointer;\n    border: 2px solid blue;\n    box-sizing: border-box;\n}\n.description[data-v-0f97a1f0]:hover {\n    cursor: pointer;\n    text-decoration: underline;\n}\n.description[data-v-0f97a1f0] {\n    margin-top: 17px;\n    font-family: 'Montserrat';\n    font-style: normal;\n    font-weight: 400;\n    /*font-size: 18px;*/\n    line-height: 22px;\n}\n\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.wrapper[data-v-0f97a1f0] {\n    height: 360px;\n}\n.avatar[data-v-0f97a1f0] {\n    height: 260px;\n    border: 2px solid transparent;\n    box-sizing: border-box;\n    display: flex;\n    overflow: hidden;\n    max-height: 260px;\n}\n.avatar img[data-v-0f97a1f0] {\n    width: 100%;\n    height: 100%;\n    -o-object-fit: cover;\n       object-fit: cover;\n}\n.avatar[data-v-0f97a1f0]:hover {\n    cursor: pointer;\n    border: 2px solid blue;\n    box-sizing: border-box;\n}\n.description[data-v-0f97a1f0]:hover {\n    cursor: pointer;\n    text-decoration: underline;\n}\n.description[data-v-0f97a1f0] {\n    margin-top: 17px;\n    font-family: 'Montserrat';\n    font-style: normal;\n    font-weight: 400;\n    /*font-size: 18px;*/\n    line-height: 22px;\n}\n\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

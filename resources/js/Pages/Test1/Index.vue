@@ -14,7 +14,7 @@ defineProps({
         <div class="mt-20">
             <my-model-slider :my-models="this.myModels"></my-model-slider>
         </div>
-        <div class="container mx-auto px-10 py-2">
+        <div class="container mx-auto px-0 py-2">
             <div class="nav py-6 text-xs">
                 <Link href="#" class="nav-link">All 3D Models</Link>
                 /
