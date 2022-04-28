@@ -25334,18 +25334,17 @@ __webpack_require__.r(__webpack_exports__);
       this.reverseCollection.push(this.myModels[this.myModels.length - (i + 1)]);
     }
 
-    this.timeInterval = this.startSlider();
+    this.timeInterval = this.startSlider(true);
   },
   methods: {
     onPrevClick: function onPrevClick() {
-      this.prevItem();
-      this.resetInterval();
+      this.prevItem(false);
     },
     onNextClick: function onNextClick() {
-      this.nextItem();
-      this.resetInterval();
+      this.nextItem(false);
     },
     prevItem: function prevItem() {
+      var auto = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
       var outerWidth = window.outerWidth;
 
       if (Math.abs(this.currentMargin) > outerWidth / 2) {
@@ -25355,8 +25354,11 @@ __webpack_require__.r(__webpack_exports__);
       } else {
         this.currentMargin = 0;
       }
+
+      if (!auto) this.resetInterval();
     },
     nextItem: function nextItem() {
+      var auto = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
       var elem = document.querySelector('div.wrapper'),
           scrollWidth = elem.scrollWidth,
           outerWidth = window.outerWidth;
@@ -25372,8 +25374,11 @@ __webpack_require__.r(__webpack_exports__);
       } else {
         this.currentMargin = 0;
       }
+
+      if (!auto) this.resetInterval();
     },
     resetInterval: function resetInterval() {
+      clearTimeout(this.timeOut);
       clearInterval(this.timeInterval);
       var self = this;
       this.timeOut = setTimeout(function () {

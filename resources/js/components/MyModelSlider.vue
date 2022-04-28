@@ -36,18 +36,16 @@ export default {
             this.forwardCollection.push(this.myModels[i]);
             this.reverseCollection.push(this.myModels[this.myModels.length - (i + 1)]);
         }
-        this.timeInterval = this.startSlider();
+        this.timeInterval = this.startSlider(true);
     },
     methods: {
         onPrevClick() {
-            this.prevItem();
-            this.resetInterval();
+            this.prevItem(false);
         },
         onNextClick() {
-            this.nextItem();
-            this.resetInterval();
+            this.nextItem(false);
         },
-        prevItem() {
+        prevItem(auto = true) {
             let outerWidth = window.outerWidth;
             if (Math.abs(this.currentMargin) > (outerWidth / 2)) {
                 let margin = outerWidth / 2;
@@ -56,8 +54,9 @@ export default {
             } else {
                 this.currentMargin = 0;
             }
+            if(!auto) this.resetInterval();
         },
-        nextItem() {
+        nextItem(auto = true) {
             let elem = document.querySelector('div.wrapper'),
                 scrollWidth = elem.scrollWidth,
                 outerWidth = window.outerWidth;
@@ -72,8 +71,10 @@ export default {
             } else {
                 this.currentMargin = 0;
             }
+            if(!auto) this.resetInterval();
         },
         resetInterval() {
+            clearTimeout(this.timeOut);
             clearInterval(this.timeInterval);
             let self = this;
             this.timeOut = setTimeout(function () {
