@@ -1,6 +1,6 @@
 <template>
     <div class="top-block flex justify-between my-10">
-        <div class="w-3/4">
+        <div class="w-3/4 text-left">
             <img class="mr-2 h-5" src="/svg/left_bracket.svg" alt="">
             <input id="myInput" class="text-lg border-0 py-0 w-1/2 italic"
                    @change="onSearchChange" type="search"

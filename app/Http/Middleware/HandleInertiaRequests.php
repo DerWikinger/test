@@ -37,7 +37,6 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
-        $data = json_decode(file_get_contents('/home/vitaly/PhpstormProjects/test/resources/js/collection.json'));
         return array_merge(parent::share($request), [
             'myModels' => MyModel::all(),
         ]);
