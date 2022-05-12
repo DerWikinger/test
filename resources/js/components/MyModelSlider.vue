@@ -2,12 +2,20 @@
     <div class="wrapper">
         <div class="slider" :style="{ 'margin-left': (currentMargin) + 'px' }">
             <my-model-icon v-for="myModel in this.forwardCollection" :key="myModel.id"
-                           :image="myModel.image">
+                           :image="myModel.image"
+                           image-height="auto"
+                           image-width="100%"
+                           image-fit="fill"
+                           :style="{ 'width': pictureWidth, 'height': pictureHeight, 'object-fit': pictureFit }">
             </my-model-icon>
         </div>
         <div class="slider" :style="{ 'margin-left': (currentMargin) + 'px' }">
             <my-model-icon v-for="myModel in this.reverseCollection" :key="myModel.id"
-                           :image="myModel.image">
+                           :image="myModel.image"
+                           image-height="auto"
+                           image-width="100%"
+                           image-fit="fill"
+                           :style="{ 'width': pictureWidth, 'height': pictureHeight, 'object-fit': pictureFit }">
             </my-model-icon>
         </div>
         <div class="btnPrev" @click="onPrevClick">
@@ -27,6 +35,9 @@ export default {
     props: {
         myModels: Object,
         slideTimeInterval: {type: Number, default: 3000},
+        pictureWidth: String,
+        pictureHeight: String,
+        pictureFit: String,
     },
     components: {
         MyModelIcon,
@@ -54,7 +65,7 @@ export default {
             } else {
                 this.currentMargin = 0;
             }
-            if(!auto) this.resetInterval();
+            if (!auto) this.resetInterval();
         },
         nextItem(auto = true) {
             let elem = document.querySelector('div.wrapper'),
@@ -71,7 +82,7 @@ export default {
             } else {
                 this.currentMargin = 0;
             }
-            if(!auto) this.resetInterval();
+            if (!auto) this.resetInterval();
         },
         resetInterval() {
             clearTimeout(this.timeOut);

@@ -1,25 +1,37 @@
 <template>
     <div id="app">
-        <div v-for="category in categories" :key="category.id" @drop="onDrop($event, category.id)"
-             class="droppable"
-             @dragover.prevent
-             @dragenter.prevent>
-            <h4>{{ category.title }}</h4>
-            <div v-for="item in items.filter( x => x.categoryId == category.id)" :key="item.id"
-                 @dragstart="onDragStart($event, item)"
-                 class="draggable"
-                 draggable="true">
-                <h5>{{ item.title }}</h5>
-            </div>
+        <div class="mt-20 flex">
+            <my-model-slider :my-models="this.myModels" picture-width="355px" picture-height="60px" picture-fit="cover"></my-model-slider>
         </div>
+        <!--        <div v-for="category in categories" :key="category.id" @drop="onDrop($event, category.id)"-->
+        <!--             class="droppable"-->
+        <!--             @dragover.prevent-->
+        <!--             @dragenter.prevent>-->
+        <!--            <h4>{{ category.title }}</h4>-->
+        <!--            <div v-for="item in items.filter( x => x.categoryId == category.id)" :key="item.id"-->
+        <!--                 @dragstart="onDragStart($event, item)"-->
+        <!--                 class="draggable"-->
+        <!--                 draggable="true">-->
+        <!--                <h5>{{ item.title }}</h5>-->
+        <!--            </div>-->
+        <!--        </div>-->
     </div>
 </template>
 
 <script>
 import {ref} from "vue"
+import MyModelSlider from "@/components/MyModelSlider";
 
 export default {
     name: "Index",
+    components: {
+        MyModelSlider,
+    },
+    props: {
+        myModels: Object,
+        collectionData: Object,
+        collectionModels: Array,
+    },
     setup() {
         const items = ref([
             {
@@ -62,8 +74,8 @@ export default {
 
         function onDrop(e, categoryId) {
             const itemId = parseInt(e.dataTransfer.getData('itemId'));
-            items.value = items.value.map( x => {
-                if(x.id == itemId) x.categoryId = categoryId;
+            items.value = items.value.map(x => {
+                if (x.id == itemId) x.categoryId = categoryId;
                 return x;
             });
         };
@@ -79,7 +91,7 @@ export default {
 <!-- Use preprocessors via the lang attribute! e.g. <style lang="scss"> -->
 <style>
 #app {
-    font-family: Avenir, Helvetica, Arial, sans-serif;
+    font-family: Montserrat, Avenir, Helvetica, Arial, sans-serif;
     text-align: center;
 }
 

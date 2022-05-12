@@ -25108,9 +25108,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var _components_MyModelSlider__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/components/MyModelSlider */ "./resources/js/components/MyModelSlider.vue");
+
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Index",
+  components: {
+    MyModelSlider: _components_MyModelSlider__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
+  props: {
+    myModels: Object,
+    collectionData: Object,
+    collectionModels: Array
+  },
   setup: function setup() {
     var items = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)([{
       id: 1,
@@ -25358,7 +25368,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "MyModelIcon",
   props: {
-    image: String
+    image: String,
+    imageWidth: {
+      type: String,
+      "default": '100%'
+    },
+    imageHeight: {
+      type: String,
+      "default": 'auto'
+    },
+    imageFit: {
+      type: String,
+      "default": 'cover'
+    }
   },
   methods: {
     getSource: function getSource() {
@@ -25389,7 +25411,10 @@ __webpack_require__.r(__webpack_exports__);
     slideTimeInterval: {
       type: Number,
       "default": 3000
-    }
+    },
+    pictureWidth: String,
+    pictureHeight: String,
+    pictureFit: String
   },
   components: {
     MyModelIcon: _components_MyModelIcon__WEBPACK_IMPORTED_MODULE_0__["default"]
@@ -30072,43 +30097,20 @@ __webpack_require__.r(__webpack_exports__);
 var _hoisted_1 = {
   id: "app"
 };
-var _hoisted_2 = ["onDrop"];
-var _hoisted_3 = ["onDragstart"];
+var _hoisted_2 = {
+  "class": "mt-20 flex"
+};
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.categories, function (category) {
-    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
-      key: category.id,
-      onDrop: function onDrop($event) {
-        return $setup.onDrop($event, category.id);
-      },
-      "class": "droppable",
-      onDragover: _cache[0] || (_cache[0] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {}, ["prevent"])),
-      onDragenter: _cache[1] || (_cache[1] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {}, ["prevent"]))
-    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h4", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(category.title), 1
-    /* TEXT */
-    ), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.items.filter(function (x) {
-      return x.categoryId == category.id;
-    }), function (item) {
-      return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
-        key: item.id,
-        onDragstart: function onDragstart($event) {
-          return $setup.onDragStart($event, item);
-        },
-        "class": "draggable",
-        draggable: "true"
-      }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h5", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.title), 1
-      /* TEXT */
-      )], 40
-      /* PROPS, HYDRATE_EVENTS */
-      , _hoisted_3);
-    }), 128
-    /* KEYED_FRAGMENT */
-    ))], 40
-    /* PROPS, HYDRATE_EVENTS */
-    , _hoisted_2);
-  }), 128
-  /* KEYED_FRAGMENT */
-  ))]);
+  var _component_my_model_slider = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("my-model-slider");
+
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_my_model_slider, {
+    "my-models": this.myModels,
+    "picture-width": "355px",
+    "picture-height": "60px",
+    "picture-fit": "cover"
+  }, null, 8
+  /* PROPS */
+  , ["my-models"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("        <div v-for=\"category in categories\" :key=\"category.id\" @drop=\"onDrop($event, category.id)\""), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("             class=\"droppable\""), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("             @dragover.prevent"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("             @dragenter.prevent>"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("            <h4>{{ category.title }}</h4>"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("            <div v-for=\"item in items.filter( x => x.categoryId == category.id)\" :key=\"item.id\""), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("                 @dragstart=\"onDragStart($event, item)\""), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("                 class=\"draggable\""), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("                 draggable=\"true\">"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("                <h5>{{ item.title }}</h5>"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("            </div>"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("        </div>")]);
 }
 
 /***/ }),
@@ -30451,9 +30453,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
     "class": "",
     src: this.getSource(),
-    alt: "No image"
-  }, null, 8
-  /* PROPS */
+    alt: "No image",
+    style: (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)({
+      'width': $props.imageWidth,
+      'height': $props.imageHeight,
+      'object-fit': $props.imageFit
+    })
+  }, null, 12
+  /* STYLE, PROPS */
   , _hoisted_2)]);
 }
 
@@ -30513,10 +30520,18 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(this.forwardCollection, function (myModel) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_my_model_icon, {
       key: myModel.id,
-      image: myModel.image
+      image: myModel.image,
+      "image-height": "auto",
+      "image-width": "100%",
+      "image-fit": "fill",
+      style: (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)({
+        'width': $props.pictureWidth,
+        'height': $props.pictureHeight,
+        'object-fit': $props.pictureFit
+      })
     }, null, 8
     /* PROPS */
-    , ["image"]);
+    , ["image", "style"]);
   }), 128
   /* KEYED_FRAGMENT */
   ))], 4
@@ -30529,10 +30544,18 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(this.reverseCollection, function (myModel) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_my_model_icon, {
       key: myModel.id,
-      image: myModel.image
+      image: myModel.image,
+      "image-height": "auto",
+      "image-width": "100%",
+      "image-fit": "fill",
+      style: (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)({
+        'width': $props.pictureWidth,
+        'height': $props.pictureHeight,
+        'object-fit': $props.pictureFit
+      })
     }, null, 8
     /* PROPS */
-    , ["image"]);
+    , ["image", "style"]);
   }), 128
   /* KEYED_FRAGMENT */
   ))], 4
@@ -36087,7 +36110,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n#app {\n    font-family: Avenir, Helvetica, Arial, sans-serif;\n    text-align: center;\n}\n.droppable {\n    padding: 15px;\n    border-radius: 5px;\n    background: #2c3e50;\n    margin-bottom: 10px;\n}\n.dropable h4 {\n    color: white;\n}\n.draggable {\n    background: white;\n    padding: 5px;\n    border-radius: 5px;\n    margin-bottom: 5px;\n}\n.draggable h5 {\n    margin: 0;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n#app {\n    font-family: Montserrat, Avenir, Helvetica, Arial, sans-serif;\n    text-align: center;\n}\n.droppable {\n    padding: 15px;\n    border-radius: 5px;\n    background: #2c3e50;\n    margin-bottom: 10px;\n}\n.dropable h4 {\n    color: white;\n}\n.draggable {\n    background: white;\n    padding: 5px;\n    border-radius: 5px;\n    margin-bottom: 5px;\n}\n.draggable h5 {\n    margin: 0;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -36183,7 +36206,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.item[data-v-1d4f9a4a] {\n    display: flex;\n    height: 150px;\n    width: 200px;\n    min-width: 200px;\n    max-height: 150px;\n    border: none;\n    box-sizing: border-box;\n    overflow: hidden;\n    /*justify-content: center;*/\n    /*align-items: center;*/\n}\n.item img[data-v-1d4f9a4a] {\n    width: 100%;\n    height: auto;\n    -o-object-fit: cover;\n       object-fit: cover;\n}\n/*.avatar:hover {*/\n/*    cursor: pointer;*/\n/*    border: 2px solid blue;*/\n/*    box-sizing: border-box;*/\n/*}*/\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.item[data-v-1d4f9a4a] {\n    display: flex;\n    height: 150px;\n    width: 200px;\n    min-width: 200px;\n    max-height: 150px;\n    border: none;\n    box-sizing: border-box;\n    overflow: hidden;\n    /*justify-content: center;*/\n    /*align-items: center;*/\n}\n/*.item img {*/\n/*    width: 100%;*/\n/*    height: auto;*/\n/*    object-fit: cover;*/\n/*}*/\n/*.avatar:hover {*/\n/*    cursor: pointer;*/\n/*    border: 2px solid blue;*/\n/*    box-sizing: border-box;*/\n/*}*/\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
