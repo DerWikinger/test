@@ -25121,6 +25121,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   props: {
     myModels: Object,
+    tags: Object,
     collectionData: Object,
     collectionModels: Array
   },
@@ -25128,6 +25129,19 @@ __webpack_require__.r(__webpack_exports__);
     getMyModel: function getMyModel() {
       console.log('MyModel: ', this.myModels[0]);
       return this.myModels ? this.myModels[0] : [];
+    },
+    getTags: function getTags() {
+      var _this = this;
+
+      var tags = [];
+
+      if (this.myModels) {
+        tags = [].concat(this.tags.filter(function (item) {
+          return item.my_model_id == _this.myModels.id;
+        }));
+      }
+
+      return tags;
     }
   },
   setup: function setup() {
@@ -25376,7 +25390,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var fast_average_color__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! fast-average-color */ "./node_modules/fast-average-color/dist/index.esm.js");
 /* harmony import */ var _Jetstream_Dropdown__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/Jetstream/Dropdown */ "./resources/js/Jetstream/Dropdown.vue");
-/* harmony import */ var _Jetstream_DropdownLink__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/Jetstream/DropdownLink */ "./resources/js/Jetstream/DropdownLink.vue");
 
 var __default__ = {
   methods: {
@@ -25404,18 +25417,17 @@ var __default__ = {
   }
 };
 
-
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (/*#__PURE__*/Object.assign(__default__, {
   props: {
-    myModel: Object
+    myModel: Object,
+    tags: Array
   },
   setup: function setup(__props, _ref) {
     var expose = _ref.expose;
     expose();
     var __returned__ = {
       FastAverageColor: fast_average_color__WEBPACK_IMPORTED_MODULE_0__["default"],
-      Dropdown: _Jetstream_Dropdown__WEBPACK_IMPORTED_MODULE_1__["default"],
-      DropdownLink: _Jetstream_DropdownLink__WEBPACK_IMPORTED_MODULE_2__["default"]
+      Dropdown: _Jetstream_Dropdown__WEBPACK_IMPORTED_MODULE_1__["default"]
     };
     Object.defineProperty(__returned__, '__isScriptSetup', {
       enumerable: false,
@@ -30190,10 +30202,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* PROPS */
   , ["my-models"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_my_model_detail, {
     "class": "mt-5",
-    "my-model": $options.getMyModel
+    "my-model": $options.getMyModel,
+    tags: $options.getTags
   }, null, 8
   /* PROPS */
-  , ["my-model"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("        <div v-for=\"category in categories\" :key=\"category.id\" @drop=\"onDrop($event, category.id)\""), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("             class=\"droppable\""), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("             @dragover.prevent"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("             @dragenter.prevent>"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("            <h4>{{ category.title }}</h4>"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("            <div v-for=\"item in items.filter( x => x.categoryId == category.id)\" :key=\"item.id\""), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("                 @dragstart=\"onDragStart($event, item)\""), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("                 class=\"draggable\""), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("                 draggable=\"true\">"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("                <h5>{{ item.title }}</h5>"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("            </div>"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("        </div>")]);
+  , ["my-model", "tags"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("        <div v-for=\"category in categories\" :key=\"category.id\" @drop=\"onDrop($event, category.id)\""), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("             class=\"droppable\""), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("             @dragover.prevent"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("             @dragenter.prevent>"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("            <h4>{{ category.title }}</h4>"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("            <div v-for=\"item in items.filter( x => x.categoryId == category.id)\" :key=\"item.id\""), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("                 @dragstart=\"onDragStart($event, item)\""), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("                 class=\"draggable\""), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("                 draggable=\"true\">"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("                <h5>{{ item.title }}</h5>"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("            </div>"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("        </div>")]);
 }
 
 /***/ }),
@@ -30587,13 +30600,7 @@ var _hoisted_10 = /*#__PURE__*/_withScopeId(function () {
 var _hoisted_11 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", {
     "class": "dropdown-content"
-  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
-    href: "#"
-  }, "1")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
-    href: "#"
-  }, "2")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
-    href: "#"
-  }, "3")])], -1
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", null, "collection 1")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", null, "collection 2")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", null, "collection 3")])], -1
   /* HOISTED */
   );
 });
@@ -30623,6 +30630,22 @@ var _hoisted_15 = /*#__PURE__*/_withScopeId(function () {
 var _hoisted_16 = {
   "class": "text-lg text-left border-black border-b py-4"
 };
+
+var _hoisted_17 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    "class": "text-sm italic text-left mt-8 mb-4"
+  }, " Tags ", -1
+  /* HOISTED */
+  );
+});
+
+var _hoisted_18 = {
+  "class": "flex border-black border-b py-2"
+};
+var _hoisted_19 = {
+  href: "#",
+  key: "tag.id"
+};
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
     src: this.getImageSource(),
@@ -30647,7 +30670,13 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* TEXT */
   ), _hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(this.myModel.description), 1
   /* TEXT */
-  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("        <div class=\"avatar flex justify-center w-full\">"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("            <img class=\"\" :src=\"this.getSource()\" alt=\"No image\">"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("        </div>"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("        <div class=\"description\">"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("            <div class=\"flex justify-between text-xl\">"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("                <div class=\"title \">"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("                    {{ this.name }}"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("                </div>"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("                <div class=\"price font-semibold \">"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("                    ${{ this.price }}"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("                </div>"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("            </div>"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("            <div class=\"flex\">"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("                <div class=\"author text-md\">"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("                    by {{ this.username }}"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("                </div>"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("            </div>"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("        </div>")]);
+  ), _hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(this.tags, function (tag) {
+    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("a", _hoisted_19, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)('#' + tag.name) + "  ", 1
+    /* TEXT */
+    );
+  }), 128
+  /* KEYED_FRAGMENT */
+  ))])]);
 }
 
 /***/ }),
@@ -36431,7 +36460,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.btnObject[data-v-1ae67833] {\n    --button-width: 303px;\n    width: var(--button-width);\n    height: 68px;\n    border: 2px solid #000000;\n    box-sizing: border-box;\n    border-radius: 10px;\n}\n.my-model-image[data-v-1ae67833] {\n    width: 458px;\n    height: 258px;\n    position: relative;\n    --light-color: white;\n    --dark-color: black;\n}\n.dark-image[data-v-1ae67833] {\n    outline-offset: -0.75rem;\n    outline: 1px dotted var(--light-color);\n}\n.light-image[data-v-1ae67833] {\n    outline-offset: -0.75rem;\n    outline: 1px dotted var(--dark-color);\n}\n.dark-image + #btnChange[data-v-1ae67833] {\n    border: 2px solid;\n    border-color: var(--light-color);\n    color: var(--light-color);\n}\n.light-image + #btnChange[data-v-1ae67833] {\n    border: 2px solid;\n    border-color: var(--dark-color);\n    color: var(--dark-color);\n}\n#btnChange[data-v-1ae67833] {\n    position: relative;\n    width: 226px;\n    height: 68px;\n    top: calc(-50% - 34px);\n    border-radius: 10px;\n}\n\n/*.dropdown-content {*/\n/*    position: relative;*/\n/*    width: var(--button-width);*/\n/*    left: calc(-50%);*/\n/*}*/\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.btnObject[data-v-1ae67833] {\n    --button-width: 303px;\n    width: var(--button-width);\n    height: 68px;\n    border: 2px solid #000000;\n    box-sizing: border-box;\n    border-radius: 10px;\n}\n.my-model-image[data-v-1ae67833] {\n    width: 458px;\n    height: 258px;\n    position: relative;\n    --light-color: white;\n    --dark-color: black;\n}\n.dark-image[data-v-1ae67833] {\n    outline-offset: -0.75rem;\n    outline: 1px dotted var(--light-color);\n}\n.light-image[data-v-1ae67833] {\n    outline-offset: -0.75rem;\n    outline: 1px dotted var(--dark-color);\n}\n.dark-image + #btnChange[data-v-1ae67833] {\n    border: 2px solid;\n    border-color: var(--light-color);\n    color: var(--light-color);\n}\n.light-image + #btnChange[data-v-1ae67833] {\n    border: 2px solid;\n    border-color: var(--dark-color);\n    color: var(--dark-color);\n}\n#btnChange[data-v-1ae67833] {\n    position: relative;\n    width: 226px;\n    height: 68px;\n    top: calc(-50% - 34px);\n    border-radius: 10px;\n}\n.dropdown-content li[data-v-1ae67833] {\n    padding: 4px 0;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

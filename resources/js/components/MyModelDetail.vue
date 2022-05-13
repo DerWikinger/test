@@ -1,9 +1,9 @@
 <script setup>
 import Dropdown from "@/Jetstream/Dropdown";
-import DropdownLink from "@/Jetstream/DropdownLink";
 
 defineProps({
     myModel: Object,
+    tags: Array
 });
 </script>
 <template>
@@ -33,9 +33,9 @@ defineProps({
                             </template>
                             <template v-slot:content>
                                 <ul class="dropdown-content">
-                                    <li><a href="#">1</a></li>
-                                    <li><a href="#">2</a></li>
-                                    <li><a href="#">3</a></li>
+                                    <li><button>collection 1</button></li>
+                                    <li><button>collection 2</button></li>
+                                    <li><button>collection 3</button></li>
                                 </ul>
                             </template>
                         </Dropdown>
@@ -63,25 +63,14 @@ defineProps({
         <p class="text-lg text-left border-black border-b py-4">
             {{ this.myModel.description }}
         </p>
-
-        <!--        <div class="avatar flex justify-center w-full">-->
-        <!--            <img class="" :src="this.getSource()" alt="No image">-->
-        <!--        </div>-->
-        <!--        <div class="description">-->
-        <!--            <div class="flex justify-between text-xl">-->
-        <!--                <div class="title ">-->
-        <!--                    {{ this.name }}-->
-        <!--                </div>-->
-        <!--                <div class="price font-semibold ">-->
-        <!--                    ${{ this.price }}-->
-        <!--                </div>-->
-        <!--            </div>-->
-        <!--            <div class="flex">-->
-        <!--                <div class="author text-md">-->
-        <!--                    by {{ this.username }}-->
-        <!--                </div>-->
-        <!--            </div>-->
-        <!--        </div>-->
+        <div class="text-sm italic text-left mt-8 mb-4">
+            Tags
+        </div>
+        <div class="flex border-black border-b py-2">
+            <a href="#" v-for="tag in this.tags" key="tag.id">
+                {{ '#'+tag.name }}&nbsp;
+            </a>
+        </div>
     </div>
 </template>
 
@@ -164,9 +153,7 @@ export default {
     border-radius: 10px;
 }
 
-/*.dropdown-content {*/
-/*    position: relative;*/
-/*    width: var(--button-width);*/
-/*    left: calc(-50%);*/
-/*}*/
+.dropdown-content li {
+    padding: 4px 0;
+}
 </style>

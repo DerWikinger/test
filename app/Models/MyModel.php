@@ -17,4 +17,9 @@ class MyModel extends Model
         'price',
         'username'
     ];
+
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class, 'models_tags');
+    }
 }

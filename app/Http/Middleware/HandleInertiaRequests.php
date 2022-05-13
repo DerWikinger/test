@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Models\MyModel;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -37,8 +38,11 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
+        $models = MyModel::all();
+        $tags = Tag::all();
         return array_merge(parent::share($request), [
-            'myModels' => MyModel::all(),
+            'myModels' => $models,
+            'tags' => $tags,
         ]);
     }
 }
