@@ -3,6 +3,9 @@
         <div class="mt-20 flex">
             <my-model-slider :my-models="this.myModels" picture-width="355px" picture-height="60px" picture-fit="cover"></my-model-slider>
         </div>
+        <div class="container mx-auto px-0 py-2">
+            <my-model-detail class="mt-5" :my-model="getMyModel"></my-model-detail>
+        </div>
         <!--        <div v-for="category in categories" :key="category.id" @drop="onDrop($event, category.id)"-->
         <!--             class="droppable"-->
         <!--             @dragover.prevent-->
@@ -19,18 +22,26 @@
 </template>
 
 <script>
-import {ref} from "vue"
+import {ref} from "vue";
 import MyModelSlider from "@/components/MyModelSlider";
+import MyModelDetail from "@/components/MyModelDetail";
 
 export default {
     name: "Index",
     components: {
         MyModelSlider,
+        MyModelDetail,
     },
     props: {
         myModels: Object,
         collectionData: Object,
         collectionModels: Array,
+    },
+    computed: {
+        getMyModel() {
+            console.log('MyModel: ', this.myModels[0]);
+            return this.myModels ? this.myModels[0] : [];
+        }
     },
     setup() {
         const items = ref([
