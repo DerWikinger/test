@@ -1,8 +1,9 @@
 <template>
-    <div class="wrapper">
-<!--        <div class="avatar flex justify-center" :style="{ 'backgroundColor' : this.backgroundColor }">-->
-        <div class="avatar flex justify-center w-full">
-            <img class="" :src="this.getSource()" alt="No image">
+    <div class="wrapper z-50" draggable="true" @mousedown="onMousedown($event, order)">
+        <div class="avatar flex justify-center w-full relative">
+            <img class="picture" :src="this.getSource()" alt="No image" :index="order">
+            <img v-if="isDark" @click="onDelete" class="absolute z-10 right-0 w-6 m-4 hover:cursor-pointer" src="/svg/trash-white.svg">
+            <img v-else @click="onDelete" class="absolute z-10 right-0 w-6 m-4 hover:cursor-pointer" src="/svg/trash.svg">
         </div>
         <div class="description">
             <div class="flex justify-between text-xl">
@@ -33,6 +34,7 @@ export default {
         image: String,
         price: Number,
         username: String,
+        order: Number,
     },
     methods: {
         getSource() {
@@ -42,69 +44,65 @@ export default {
         getBackgroundColor() {
 
         },
+        onDelete() {
+            console.log('Picture is delete!');
+        },
+        onMousedown(event, order) {
+            let picture = new Image(300, 200);
+            picture.src = this.getSource();
+            event.target.ondragstart = function () {
+                return false;
+            }
+
+            picture.style.position = 'absolute';
+            picture.style.zIndex = 1000;
+            picture.style.objectFit = 'fill';
+            document.body.append(picture);
+
+            moveAt(event.pageX, event.pageY);
+
+            function moveAt(pageX, pageY) {
+                picture.style.left = pageX - picture.offsetWidth / 2 + 'px';
+                picture.style.top = pageY - picture.offsetHeight / 2 + 'px';
+            }
+
+            function onMouseMove(event) {
+                moveAt(event.pageX, event.pageY);
+            }
+
+            document.addEventListener('mousemove', onMouseMove);
+            picture.onmouseup = function(event) {
+                document.removeEventListener('mousemove', onMouseMove);
+                picture.hidden = true;
+                // let elemBelow = document.elementFromPoint(event.screenX, event.screenY);
+                let elemBelow = document.elementFromPoint(event.clientX, event.clientY);
+                picture.onmouseup = null;
+                picture.remove();
+                if (!elemBelow || !elemBelow.attributes["index"]) return;
+                let newOrder = elemBelow.attributes["index"].value;
+                let droppableBelow = elemBelow.closest('.droppable');
+                if (!droppableBelow) return;
+                droppableBelow.ondrop(event, order, newOrder);
+                // console.log(droppableBelow);
+            };
+        },
     },
-    // mounted() {
-    //     let self = this;
-    //     let img = new Image();
-    //     let colorArray = [];
-    //
-    //     img.onload = function () {
-    //         let canvas = document.createElement("canvas");
-    //         canvas.width = img.naturalWidth;
-    //         canvas.height = img.naturalHeight;
-    //
-    //         let ctx = canvas.getContext("2d");
-    //         ctx.drawImage(this, 0, 0);
-    //
-    //         let rowStart = 0,
-    //             row10 = Math.trunc(img.naturalHeight / 10),
-    //             row90 = img.naturalHeight - row10,
-    //             rowEnd = img.naturalHeight;
-    //         let colStart = 0,
-    //             col10 = Math.trunc(img.naturalWidth / 10),
-    //             col90 = img.naturalWidth - col10,
-    //             colEnd = img.naturalWidth;
-    //
-    //         let imgData = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
-    //
-    //         for (let r = rowStart; r < row10; r++) {
-    //             for (let c = colStart; c < col10 * 4; c += 4) {
-    //                 let i = r * colEnd + c;
-    //                 // let rgba = imgData[i] * 256 * 256 * 256 + imgData[i + 1] * 256 * 256 + imgData[i + 2] * 256 + imgData[i + 3];
-    //                 // let rgba = imgData[i+3] * 256 * 256 * 256 + imgData[i + 2] * 256 * 256 + imgData[i + 1] * 256 + imgData[i];
-    //                 let rgb = imgData[i] * 256 * 256 + imgData[i+1] * 256 + imgData[i+2];
-    //                 colorArray.push(rgb);
-    //             }
-    //         }
-    //
-    //         colorArray = colorArray.sort();
-    //         console.log(colorArray);
-    //
-    //         let moda = colorArray[0];
-    //         let maxCount = 1;
-    //         let count = 0;
-    //         let prevColor = colorArray[0];
-    //         colorArray.forEach(function (color) {
-    //             if (color == prevColor) {
-    //                 count++;
-    //             } else {
-    //                 count = 1;
-    //                 prevColor = color;
-    //             }
-    //             if (count > maxCount) {
-    //                 maxCount = count;
-    //                 moda = color;
-    //             }
-    //         });
-    //         console.log('Image: ', self.image, ' : ', '#' + moda.toString(16));
-    //         self.backgroundColor = '#' + moda.toString(16);
-    //     };
-    //
-    //     img.src = this.getSource();
-    // },
+    created() {
+
+        let self = this;
+        const fac = new FastAverageColor();
+        fac.getColorAsync(this.getSource(), {algorithm: 'dominant'})
+            .then(color => {
+                self.isDark = color.isDark;
+            })
+            .catch(e => {
+                console.error(e);
+            });
+    },
     data() {
         return {
             backgroundColor: 'transparent',
+            isDark: false,
         }
     },
     computed: {}
@@ -126,7 +124,11 @@ export default {
     max-height: 260px;
 }
 
-.avatar img {
+.draggable {
+
+}
+
+.avatar img.picture {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -150,6 +152,12 @@ export default {
     font-weight: 400;
     /*font-size: 18px;*/
     line-height: 22px;
+}
+
+canvas {
+    position:absolute;
+    /*left: 0;*/
+    left:-100%;
 }
 
 </style>

@@ -1,6 +1,7 @@
 <template>
     <div class="top-block flex justify-between my-10">
-        <div class="w-3/4 text-left">
+        <slot></slot>
+        <div v-if="searchable" class="w-3/4 text-left">
             <img class="mr-2 h-5" src="/svg/left_bracket.svg" alt="">
             <input id="myInput" class="text-lg border-0 py-0 w-1/2 italic"
                    @change="onSearchChange" type="search"
@@ -8,7 +9,7 @@
             <img class="mr-2 h-5" src="/svg/glass.svg" alt="">
             <img class="mr-2 h-5" src="/svg/right_bracket.svg" alt="">
         </div>
-        <div class="sort-block">
+        <div v-if="sortable" class="sort-block">
             <span>Sort by</span>
             <select name="sortBy" id="sortBy" class="border-0 pr-5 mr-1" @change="onSortChange">
                 <option value="date">date</option>
@@ -19,13 +20,15 @@
         </div>
     </div>
     <div class="v-wrapper" :style="{ 'height': (rowHeight * rowsCount) + 'px' }">
-        <div class="v-gallery grid grid-cols-3 gap-y-0 gap-x-4 text-center">
-            <div v-for="myModel in this.myModels" :key="myModel.id" class="grid-row">
+        <div class="v-gallery grid grid-cols-3 gap-y-0 gap-x-4 text-center droppable"
+             @dragover.prevent @dragenter.prevent @dragstart.prevent>
+            <div v-for="(myModel, index) in this.collection" :key="index" class="grid-row">
                 <my-model-brief
                     :name="myModel.name"
                     :price="myModel.price"
                     :image="myModel.image"
-                    :username="myModel.username">
+                    :username="myModel.username"
+                    :order="+index">
                 </my-model-brief>
             </div>
         </div>
@@ -43,6 +46,8 @@ export default {
     props: {
         myModels: Object,
         visibleRows: {type: Number, default: 4},
+        searchable: {type: Boolean, default: true},
+        sortable: {type: Boolean, default: true},
     },
     components: {
         MyModelBrief
@@ -51,6 +56,12 @@ export default {
         let elem = document.getElementsByClassName('grid-row').item(0);
         this.rowHeight = elem ? elem.clientHeight : 360;
         this.rowsCount = this.minVisibleRows;
+        for(let index = 0; index < this.myModels.length; index++) {
+            let model = this.myModels[index];
+            this.collection[index] = model;
+        }
+        let droppableElem = document.querySelector('.droppable');
+        droppableElem.ondrop = this.onDrop;
     },
     methods: {
         onMoreClick() {
@@ -65,19 +76,32 @@ export default {
             } else {
                 btn.innerHTML = 'Show more 3';
             }
-            console.log(this.rowHeight);
         },
         onSortChange() {
 
         },
         onSearchChange() {
 
-        }
+        },
+        onDrop(e, order, newOrder) {
+            let model = this.collection[order];
+            if(newOrder < order) {
+                for(let i = order; i > newOrder; i--) {
+                    this.collection[i] = this.collection[i-1];
+                }
+            } else {
+                for(let i = order; i < newOrder; i++) {
+                    this.collection[i] = this.collection[i+1];
+                }
+            }
+            this.collection[newOrder] = model;
+        },
     },
     data() {
         return {
             rowHeight: 360,
             rowsCount: 1,
+            collection: {},
         }
     },
     computed: {
@@ -129,6 +153,10 @@ input:focus, input:focus-visible, select:focus, select:focus-visible {
 
 .sort-block {
     height: inherit;
+}
+
+.droppable {
+    background: transparent;
 }
 
 </style>
