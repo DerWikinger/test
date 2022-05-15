@@ -5,9 +5,9 @@
         </div>
         <div class="container mx-auto px-0 py-2">
             <my-model-detail class="mt-5" :my-model="getMyModel" :tags="getTags"></my-model-detail>
-            <my-models-collection :searchable="false" :sortable="false" :my-models="this.myModels">
+            <my-models-full-collection :searchable="false" :sortable="false" :my-models="this.myModels">
                 <h5 class="w-full text-center italic mt-4">Drag items to put them in custom order</h5>
-            </my-models-collection>
+            </my-models-full-collection>
         </div>
 
         <!--        <div v-for="category in categories" :key="category.id" @drop="onDrop($event, category.id)"-->
@@ -29,14 +29,14 @@
 import {ref} from "vue";
 import MyModelSlider from "@/components/MyModelSlider";
 import MyModelDetail from "@/components/MyModelDetail";
-import MyModelsCollection from "@/components/MyModelsCollection";
+import MyModelsFullCollection from "@/components/MyModelsFullCollection";
 
 export default {
     name: "Index",
     components: {
         MyModelSlider,
         MyModelDetail,
-        MyModelsCollection,
+        MyModelsFullCollection,
     },
     props: {
         myModels: Object,
