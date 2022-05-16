@@ -24,10 +24,7 @@
             <div v-for="(myModel, index) in this.collection" :key="index" class="grid-row">
                 <my-model-brief class="w-[320px] self-center"
                     @delete="onDelete"
-                    :name="myModel.name"
-                    :price="myModel.price"
-                    :image="myModel.image"
-                    :username="myModel.username"
+                    :model="myModel"
                     :order="+index"
                     over-icon-source="trash"
                     :height="rowHeight"
@@ -66,7 +63,10 @@ export default {
         }
         this.rowsCount = this.totalRows;
         let droppableElem = document.querySelector('.droppable');
-        droppableElem.ondrop = this.onDrop;
+        if(droppableElem) {
+            droppableElem.ondrop = this.onDrop;
+            droppableElem.oninsert = this.insertModel;
+        }
     },
     methods: {
         onMoreClick() {
@@ -99,7 +99,18 @@ export default {
         onSearchChange() {
 
         },
-        onDrop(e, order, newOrder) {
+        onDrop(e, order, newOrder, obj) {
+            let contains = false;
+            for(let model in this.collection) {
+                if(model.id === obj.id) {
+                    contains = true;
+                    break;
+                }
+            }
+            if(!contains) {
+                this.insertModel(obj, newOrder);
+                return;
+            }
             let model = this.collection[order];
             if (newOrder < order) {
                 for (let i = order; i > newOrder; i--) {
@@ -112,6 +123,13 @@ export default {
             }
             this.collection[newOrder] = model;
         },
+        insertModel(model, order) {
+            for(let i = Object.keys(this.collection).length; i > order ; i--) {
+                this.collection[i] = this.collection[i-1];
+            }
+            this.collection[order] = model;
+            this.rowsCount = this.totalRows;
+        }
     },
     data() {
         return {

@@ -8,15 +8,15 @@
         <div class="description">
             <div class="flex justify-between text-xl">
                 <div class="title ">
-                    {{ this.name }}
+                    {{ model.name }}
                 </div>
                 <div class="price font-semibold ">
-                    ${{ this.price }}
+                    ${{ model.price }}
                 </div>
             </div>
             <div class="flex">
                 <div class="author text-md">
-                    by {{ this.username }}
+                    by {{ model.username }}
                 </div>
             </div>
         </div>
@@ -29,10 +29,7 @@ import FastAverageColor from 'fast-average-color';
 export default {
     name: "MyModelBrief",
     props: {
-        name: String,
-        image: String,
-        price: Number,
-        username: String,
+        model: Object,
         order: Number,
         height: { type: Number, default: 360 },
         imageHeight: { type: Number, default: 260 },
@@ -40,23 +37,22 @@ export default {
     },
     methods: {
         getSource() {
-            return '/storage/images/' + this.image;
+            return '/storage/images/' + this.model.image;
             // return 'http://95.179.188.38' + this.image;
-        },
-        getBackgroundColor() {
-
         },
         onClick() {
             if(this.overIconSource === 'trash') {
                 this.$emit('delete', this.order);
             } else {
-                this.$emit('addmodel', this.order);
+                let droppable = document.querySelector('.droppable');
+                console.log('Droppable: ', droppable);
+                if (!droppable) return;
+                droppable.oninsert(this.model, 0);
             }
         },
         onMousedown(event, order) {
             let elemBelow = document.elementFromPoint(event.clientX, event.clientY);
             if (elemBelow.className.includes('over-icon')) {
-                this.onClick(this.order);
                 return;
             }
 
@@ -83,22 +79,26 @@ export default {
             }
 
             document.addEventListener('mousemove', onMouseMove);
+            let self = this;
             picture.onmouseup = function(event) {
                 document.removeEventListener('mousemove', onMouseMove);
                 picture.hidden = true;
                 let elemBelow = document.elementFromPoint(event.clientX, event.clientY);
+                if (elemBelow.className.includes('over-icon')) {
+                    this.onClick();
+                    return;
+                }
                 picture.onmouseup = null;
                 picture.remove();
                 if (!elemBelow || !elemBelow.attributes["index"]) return;
                 let newOrder = elemBelow.attributes["index"].value;
                 let droppableBelow = elemBelow.closest('.droppable');
                 if (!droppableBelow) return;
-                droppableBelow.ondrop(event, order, newOrder);
+                droppableBelow.ondrop(event, order, newOrder, self.model);
             };
         },
     },
     created() {
-
         let self = this;
         const fac = new FastAverageColor();
         fac.getColorAsync(this.getSource(), {algorithm: 'dominant'})

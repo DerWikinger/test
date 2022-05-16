@@ -11,10 +11,10 @@
                 </div>
                 <div class="w-1/3 flex flex-col">
                     <div class="flex h-1/2 items-center justify-end">
-                        <div class="flex h-min ">
+                        <button class="flex h-min ">
                             <div class="mr-3">Next collection</div>
                             <img class="" src="/svg/next.svg" alt="">
-                        </div>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -34,51 +34,37 @@
                     </my-models-full-collection>
                     <div class="h-28"></div>
                 </div>
-                <div class="w-1/3 sidebar flex flex-col pl-36">
-                    <my-model-brief class="w-[320px] self-end"
-                        :name="myModels[0].name"
-                        :price="myModels[0].price"
-                        :image="myModels[0].image"
-                        :username="myModels[0].username"
-                        :height="300"
-                        :image-height="200">
-                    </my-model-brief>
+                <div class="w-1/3 sidebar flex flex-col pl-36 items-end">
+                    <other-models :models="this.otherModels"
+                                  :visible-rows="+7">
+                    </other-models>
                 </div>
             </div>
         </div>
-
-        <!--        <div v-for="category in categories" :key="category.id" @drop="onDrop($event, category.id)"-->
-        <!--             class="droppable"-->
-        <!--             @dragover.prevent-->
-        <!--             @dragenter.prevent>-->
-        <!--            <h4>{{ category.title }}</h4>-->
-        <!--            <div v-for="item in items.filter( x => x.categoryId == category.id)" :key="item.id"-->
-        <!--                 @dragstart="onDragStart($event, item)"-->
-        <!--                 class="draggable"-->
-        <!--                 draggable="true">-->
-        <!--                <h5>{{ item.title }}</h5>-->
-        <!--            </div>-->
-        <!--        </div>-->
     </div>
 </template>
 
 <script>
-import {ref} from "vue";
 import MyModelSlider from "@/components/MyModelSlider";
 import MyModelDetail from "@/components/MyModelDetail";
 import MyModelsFullCollection from "@/components/MyModelsFullCollection";
 import MyModelBrief from "@/components/MyModelBrief";
+import Button from "@/Jetstream/Button";
+import OtherModels from "@/components/OtherModels";
 
 export default {
     name: "Index",
     components: {
+        Button,
         MyModelSlider,
         MyModelDetail,
         MyModelsFullCollection,
         MyModelBrief,
+        OtherModels,
     },
     props: {
         myModels: Object,
+        otherModels: Object,
         tags: Object,
         collectionData: Object,
         collectionModels: Array,
@@ -94,60 +80,6 @@ export default {
                 tags = [].concat(this.tags.filter(item => item.my_model_id == this.myModels.id));
             }
             return tags;
-        }
-    },
-    setup() {
-        const items = ref([
-            {
-                id: 1,
-                title: 'BMW',
-                categoryId: 1,
-            },
-            {
-                id: 2,
-                title: 'Audi',
-                categoryId: 1,
-            },
-            {
-                id: 3,
-                title: 'Dog',
-                categoryId: 2,
-            },
-            {
-                id: 4,
-                title: 'Cat',
-                categoryId: 2,
-            },
-        ]);
-        const categories = ref([
-            {
-                id: 1,
-                title: 'Cars'
-            },
-            {
-                id: 2,
-                title: 'Animals'
-            }
-        ]);
-
-        function onDragStart(e, item) {
-            e.dataTransfer.dropEffect = 'move';
-            e.dataTransfer.effectAllowed = 'copy';
-            e.dataTransfer.setData('itemId', item.id.toString());
-        };
-
-        function onDrop(e, categoryId) {
-            const itemId = parseInt(e.dataTransfer.getData('itemId'));
-            items.value = items.value.map(x => {
-                if (x.id == itemId) x.categoryId = categoryId;
-                return x;
-            });
-        };
-        return {
-            items,
-            categories,
-            onDragStart,
-            onDrop,
         }
     },
 };
@@ -166,7 +98,7 @@ export default {
     margin-bottom: 10px;
 }
 
-.dropable h4 {
+.droppable h4 {
     color: white;
 }
 

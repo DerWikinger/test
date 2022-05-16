@@ -24,10 +24,7 @@
              @dragover.prevent @dragenter.prevent @dragstart.prevent>
             <div v-for="(myModel, index) in this.collection" :key="index" class="grid-row">
                 <my-model-brief
-                    :name="myModel.name"
-                    :price="myModel.price"
-                    :image="myModel.image"
-                    :username="myModel.username"
+                    :model="myModel"
                     :order="+index">
                 </my-model-brief>
             </div>

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\MyModel;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -15,9 +17,14 @@ class Test2Controller extends Controller
 //            {"id":12,"model_name":"Rapier","price":0,"user_name":"Vitaly Miytofanov","image":"\/storage\/images\/image_13.png"}
 //        ]');
 //        dump($collectionModels);
+        $otherModels = MyModel::all()->random(10);
+        foreach ($otherModels as $model) {
+            $model->id += 200;
+        }
         return Inertia::render('Test2/Index', [
 //            'collectionData' => $collectionData,
 //            'collectionModels' => $collectionModels,
+            'otherModels' => $otherModels,
         ]);
     }
 }
