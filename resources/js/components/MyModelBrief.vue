@@ -1,9 +1,9 @@
 <template>
-    <div class="wrapper z-50" draggable="true" @mousedown="onMousedown($event, order)">
-        <div class="avatar flex justify-center w-full relative">
+    <div class="wrapper" :style="{'height': height + 'px'}" draggable="true" @mousedown="onMousedown($event, order)">
+        <div class="avatar flex justify-center w-full relative" :style="{'height': imageHeight + 'px' }">
             <img class="picture" :src="this.getSource()" alt="No image" :index="order">
-            <img v-if="isDark" @click="onDelete" class="absolute z-10 right-0 w-6 m-4 hover:cursor-pointer" src="/svg/trash-white.svg">
-            <img v-else @click="onDelete" class="absolute z-10 right-0 w-6 m-4 hover:cursor-pointer" src="/svg/trash.svg">
+            <img v-if="overIconSource" @mousedown.prevent @click="onClick" class="over-icon absolute right-0 w-6 m-4 hover:cursor-pointer"
+                 :src="'/svg/' + (isDark ? overIconSource + '-white' : overIconSource ) + '.svg'">
         </div>
         <div class="description">
             <div class="flex justify-between text-xl">
@@ -29,12 +29,14 @@ import FastAverageColor from 'fast-average-color';
 export default {
     name: "MyModelBrief",
     props: {
-        // MyModel: Object,
         name: String,
         image: String,
         price: Number,
         username: String,
         order: Number,
+        height: { type: Number, default: 360 },
+        imageHeight: { type: Number, default: 260 },
+        overIconSource: { type: String, default: '' },
     },
     methods: {
         getSource() {
@@ -44,18 +46,28 @@ export default {
         getBackgroundColor() {
 
         },
-        onDelete() {
-            console.log('Picture is delete!');
+        onClick() {
+            if(this.overIconSource === 'trash') {
+                this.$emit('delete', this.order);
+            } else {
+                this.$emit('addmodel', this.order);
+            }
         },
         onMousedown(event, order) {
-            let picture = new Image(300, 200);
+            let elemBelow = document.elementFromPoint(event.clientX, event.clientY);
+            if (elemBelow.className.includes('over-icon')) {
+                this.onClick(this.order);
+                return;
+            }
+
+            let picture = new Image(this.imageHeight*0.9*16/9, this.imageHeight*0.9);
             picture.src = this.getSource();
             event.target.ondragstart = function () {
                 return false;
             }
 
             picture.style.position = 'absolute';
-            picture.style.zIndex = 1000;
+            picture.style.zIndex = '10';
             picture.style.objectFit = 'fill';
             document.body.append(picture);
 
@@ -74,7 +86,6 @@ export default {
             picture.onmouseup = function(event) {
                 document.removeEventListener('mousemove', onMouseMove);
                 picture.hidden = true;
-                // let elemBelow = document.elementFromPoint(event.screenX, event.screenY);
                 let elemBelow = document.elementFromPoint(event.clientX, event.clientY);
                 picture.onmouseup = null;
                 picture.remove();
@@ -83,7 +94,6 @@ export default {
                 let droppableBelow = elemBelow.closest('.droppable');
                 if (!droppableBelow) return;
                 droppableBelow.ondrop(event, order, newOrder);
-                // console.log(droppableBelow);
             };
         },
     },
@@ -111,21 +121,11 @@ export default {
 
 <style scoped>
 
-.wrapper {
-    height: 360px;
-}
-
 .avatar {
-    height: 260px;
     border: 2px solid transparent;
     box-sizing: border-box;
     display: flex;
     overflow: hidden;
-    max-height: 260px;
-}
-
-.draggable {
-
 }
 
 .avatar img.picture {
@@ -152,12 +152,6 @@ export default {
     font-weight: 400;
     /*font-size: 18px;*/
     line-height: 22px;
-}
-
-canvas {
-    position:absolute;
-    /*left: 0;*/
-    left:-100%;
 }
 
 </style>

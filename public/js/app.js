@@ -25111,6 +25111,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_MyModelSlider__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/components/MyModelSlider */ "./resources/js/components/MyModelSlider.vue");
 /* harmony import */ var _components_MyModelDetail__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/components/MyModelDetail */ "./resources/js/components/MyModelDetail.vue");
 /* harmony import */ var _components_MyModelsFullCollection__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/components/MyModelsFullCollection */ "./resources/js/components/MyModelsFullCollection.vue");
+/* harmony import */ var _components_MyModelBrief__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/components/MyModelBrief */ "./resources/js/components/MyModelBrief.vue");
+
 
 
 
@@ -25120,7 +25122,8 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     MyModelSlider: _components_MyModelSlider__WEBPACK_IMPORTED_MODULE_1__["default"],
     MyModelDetail: _components_MyModelDetail__WEBPACK_IMPORTED_MODULE_2__["default"],
-    MyModelsFullCollection: _components_MyModelsFullCollection__WEBPACK_IMPORTED_MODULE_3__["default"]
+    MyModelsFullCollection: _components_MyModelsFullCollection__WEBPACK_IMPORTED_MODULE_3__["default"],
+    MyModelBrief: _components_MyModelBrief__WEBPACK_IMPORTED_MODULE_4__["default"]
   },
   props: {
     myModels: Object,
@@ -25299,23 +25302,45 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "MyModelBrief",
   props: {
-    // MyModel: Object,
     name: String,
     image: String,
     price: Number,
     username: String,
-    order: Number
+    order: Number,
+    height: {
+      type: Number,
+      "default": 360
+    },
+    imageHeight: {
+      type: Number,
+      "default": 260
+    },
+    overIconSource: {
+      type: String,
+      "default": ''
+    }
   },
   methods: {
     getSource: function getSource() {
       return '/storage/images/' + this.image; // return 'http://95.179.188.38' + this.image;
     },
     getBackgroundColor: function getBackgroundColor() {},
-    onDelete: function onDelete() {
-      console.log('Picture is delete!');
+    onClick: function onClick() {
+      if (this.overIconSource === 'trash') {
+        this.$emit('delete', this.order);
+      } else {
+        this.$emit('addmodel', this.order);
+      }
     },
     onMousedown: function onMousedown(event, order) {
-      var picture = new Image(300, 200);
+      var elemBelow = document.elementFromPoint(event.clientX, event.clientY);
+
+      if (elemBelow.className.includes('over-icon')) {
+        this.onClick(this.order);
+        return;
+      }
+
+      var picture = new Image(this.imageHeight * 0.9 * 16 / 9, this.imageHeight * 0.9);
       picture.src = this.getSource();
 
       event.target.ondragstart = function () {
@@ -25323,7 +25348,7 @@ __webpack_require__.r(__webpack_exports__);
       };
 
       picture.style.position = 'absolute';
-      picture.style.zIndex = 1000;
+      picture.style.zIndex = '10';
       picture.style.objectFit = 'fill';
       document.body.append(picture);
       moveAt(event.pageX, event.pageY);
@@ -25341,8 +25366,7 @@ __webpack_require__.r(__webpack_exports__);
 
       picture.onmouseup = function (event) {
         document.removeEventListener('mousemove', onMouseMove);
-        picture.hidden = true; // let elemBelow = document.elementFromPoint(event.screenX, event.screenY);
-
+        picture.hidden = true;
         var elemBelow = document.elementFromPoint(event.clientX, event.clientY);
         picture.onmouseup = null;
         picture.remove();
@@ -25350,7 +25374,7 @@ __webpack_require__.r(__webpack_exports__);
         var newOrder = elemBelow.attributes["index"].value;
         var droppableBelow = elemBelow.closest('.droppable');
         if (!droppableBelow) return;
-        droppableBelow.ondrop(event, order, newOrder); // console.log(droppableBelow);
+        droppableBelow.ondrop(event, order, newOrder);
       };
     }
   },
@@ -25715,15 +25739,12 @@ __webpack_require__.r(__webpack_exports__);
     MyModelBrief: _components_MyModelBrief__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   mounted: function mounted() {
-    var elem = document.getElementsByClassName('grid-row').item(0);
-    this.rowHeight = elem ? elem.clientHeight : 360;
-    this.rowsCount = this.totalRows;
-
     for (var index = 0; index < this.myModels.length; index++) {
       var model = this.myModels[index];
       this.collection[index] = model;
     }
 
+    this.rowsCount = this.totalRows;
     var droppableElem = document.querySelector('.droppable');
     droppableElem.ondrop = this.onDrop;
   },
@@ -25743,8 +25764,13 @@ __webpack_require__.r(__webpack_exports__);
         btn.innerHTML = 'Show more 3';
       }
     },
+    onDelete: function onDelete(index) {
+      delete this.collection[index];
+      this.rowsCount = this.totalRows;
+    },
     onDiscardClick: function onDiscardClick() {
       console.log('Discard changes');
+      location = document.location;
     },
     onApplyClick: function onApplyClick() {
       console.log('Apply changes');
@@ -25769,15 +25795,15 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      rowHeight: 360,
+      rowHeight: 300,
       rowsCount: 1,
       collection: {}
     };
   },
   computed: {
     totalRows: function totalRows() {
-      var r = Math.trunc(this.myModels.length / 3);
-      if (this.myModels.length % 3) r += 1;
+      var r = Math.trunc(Object.keys(this.collection).length / 3);
+      if (Object.keys(this.collection).length % 3) r += 1;
       return r;
     },
     minVisibleRows: function minVisibleRows() {
@@ -30322,21 +30348,43 @@ var _hoisted_2 = {
   "class": "mt-20 flex"
 };
 var _hoisted_3 = {
-  "class": "container mx-auto px-0 py-2"
+  "class": "container justify-center mx-auto px-0 py-2"
+};
+var _hoisted_4 = {
+  "class": "flex"
+};
+var _hoisted_5 = {
+  "class": "w-2/3"
 };
 
-var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h5", {
-  "class": "w-full text-center italic mt-4"
-}, "Drag items to put them in custom order", -1
+var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"w-1/3 flex flex-col\"><div class=\"flex h-1/2 items-center justify-end\"><div class=\"flex h-min\"><div class=\"mr-3\">Next collection</div><img class=\"\" src=\"/svg/next.svg\" alt=\"\"></div></div></div>", 1);
+
+var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"w-100 my-6 h-6\"><div class=\"flex justify-center italic w-2/3\"> Drag items to put them in custom order </div><div class=\"flex -mt-[4.5rem] h-6 pl-36 justify-end items-start\"><div class=\"w-[320px]\"><div class=\"text-left text-xl\">Recommendations</div></div></div></div>", 1);
+
+var _hoisted_8 = {
+  "class": "flex justify-between"
+};
+var _hoisted_9 = {
+  "class": "w-2/3"
+};
+
+var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "h-28"
+}, null, -1
 /* HOISTED */
 );
 
+var _hoisted_11 = {
+  "class": "w-1/3 sidebar flex flex-col pl-36"
+};
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_my_model_slider = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("my-model-slider");
 
   var _component_my_model_detail = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("my-model-detail");
 
   var _component_my_models_full_collection = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("my-models-full-collection");
+
+  var _component_my_model_brief = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("my-model-brief");
 
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_my_model_slider, {
     "my-models": this.myModels,
@@ -30345,26 +30393,29 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "picture-fit": "cover"
   }, null, 8
   /* PROPS */
-  , ["my-models"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_my_model_detail, {
+  , ["my-models"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_my_model_detail, {
     "class": "mt-5",
     "my-model": $options.getMyModel,
     tags: $options.getTags
   }, null, 8
   /* PROPS */
-  , ["my-model", "tags"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_my_models_full_collection, {
+  , ["my-model", "tags"])]), _hoisted_6]), _hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_my_models_full_collection, {
     searchable: false,
     sortable: false,
     "my-models": this.myModels
-  }, {
-    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [_hoisted_4];
-    }),
-    _: 1
-    /* STABLE */
-
-  }, 8
+  }, null, 8
   /* PROPS */
-  , ["my-models"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("        <div v-for=\"category in categories\" :key=\"category.id\" @drop=\"onDrop($event, category.id)\""), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("             class=\"droppable\""), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("             @dragover.prevent"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("             @dragenter.prevent>"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("            <h4>{{ category.title }}</h4>"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("            <div v-for=\"item in items.filter( x => x.categoryId == category.id)\" :key=\"item.id\""), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("                 @dragstart=\"onDragStart($event, item)\""), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("                 class=\"draggable\""), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("                 draggable=\"true\">"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("                <h5>{{ item.title }}</h5>"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("            </div>"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("        </div>")]);
+  , ["my-models"]), _hoisted_10]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_my_model_brief, {
+    "class": "w-[320px] self-end",
+    name: $props.myModels[0].name,
+    price: $props.myModels[0].price,
+    image: $props.myModels[0].image,
+    username: $props.myModels[0].username,
+    height: 300,
+    "image-height": 200
+  }, null, 8
+  /* PROPS */
+  , ["name", "price", "image", "username"])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("        <div v-for=\"category in categories\" :key=\"category.id\" @drop=\"onDrop($event, category.id)\""), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("             class=\"droppable\""), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("             @dragover.prevent"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("             @dragenter.prevent>"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("            <h4>{{ category.title }}</h4>"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("            <div v-for=\"item in items.filter( x => x.categoryId == category.id)\" :key=\"item.id\""), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("                 @dragstart=\"onDragStart($event, item)\""), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("                 class=\"draggable\""), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("                 draggable=\"true\">"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("                <h5>{{ item.title }}</h5>"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("            </div>"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("        </div>")]);
 }
 
 /***/ }),
@@ -30638,10 +30689,8 @@ var _withScopeId = function _withScopeId(n) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.pushScopeId)("data-v-0f97a1f0"), n = n(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.popScopeId)(), n;
 };
 
-var _hoisted_1 = {
-  "class": "avatar flex justify-center w-full relative"
-};
-var _hoisted_2 = ["src", "index"];
+var _hoisted_1 = ["src", "index"];
+var _hoisted_2 = ["src"];
 var _hoisted_3 = {
   "class": "description"
 };
@@ -30662,40 +30711,46 @@ var _hoisted_8 = {
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
-    "class": "wrapper z-50",
+    "class": "wrapper",
+    style: (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)({
+      'height': $props.height + 'px'
+    }),
     draggable: "true",
     onMousedown: _cache[2] || (_cache[2] = function ($event) {
       return $options.onMousedown($event, $props.order);
     })
-  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    "class": "avatar flex justify-center w-full relative",
+    style: (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)({
+      'height': $props.imageHeight + 'px'
+    })
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
     "class": "picture",
     src: this.getSource(),
     alt: "No image",
     index: $props.order
   }, null, 8
   /* PROPS */
-  , _hoisted_2), $data.isDark ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("img", {
+  , _hoisted_1), $props.overIconSource ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("img", {
     key: 0,
-    onClick: _cache[0] || (_cache[0] = function () {
-      return $options.onDelete && $options.onDelete.apply($options, arguments);
-    }),
-    "class": "absolute z-10 right-0 w-6 m-4 hover:cursor-pointer",
-    src: "/svg/trash-white.svg"
-  })) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("img", {
-    key: 1,
+    onMousedown: _cache[0] || (_cache[0] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {}, ["prevent"])),
     onClick: _cache[1] || (_cache[1] = function () {
-      return $options.onDelete && $options.onDelete.apply($options, arguments);
+      return $options.onClick && $options.onClick.apply($options, arguments);
     }),
-    "class": "absolute z-10 right-0 w-6 m-4 hover:cursor-pointer",
-    src: "/svg/trash.svg"
-  }))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(this.name), 1
+    "class": "over-icon absolute right-0 w-6 m-4 hover:cursor-pointer",
+    src: '/svg/' + ($data.isDark ? $props.overIconSource + '-white' : $props.overIconSource) + '.svg'
+  }, null, 40
+  /* PROPS, HYDRATE_EVENTS */
+  , _hoisted_2)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 4
+  /* STYLE */
+  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(this.name), 1
   /* TEXT */
   ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, " $" + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(this.price), 1
   /* TEXT */
   )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, " by " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(this.username), 1
   /* TEXT */
-  )])])], 32
-  /* HYDRATE_EVENTS */
+  )])])], 36
+  /* STYLE, HYDRATE_EVENTS */
   );
 }
 
@@ -31194,7 +31249,7 @@ var _withScopeId = function _withScopeId(n) {
 };
 
 var _hoisted_1 = {
-  "class": "top-block flex justify-between my-10"
+  "class": "top-block flex justify-between"
 };
 var _hoisted_2 = {
   key: 0,
@@ -31300,7 +31355,7 @@ var _hoisted_16 = [_hoisted_14, _hoisted_15];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_my_model_brief = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("my-model-brief");
 
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.renderSlot)(_ctx.$slots, "default", {}, undefined, true), $props.searchable ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_2, [_hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [$props.searchable ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_2, [_hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     id: "myInput",
     "class": "text-lg border-0 py-0 w-1/2 italic",
     onChange: _cache[0] || (_cache[0] = function () {
@@ -31334,14 +31389,19 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       key: index,
       "class": "grid-row"
     }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_my_model_brief, {
+      "class": "w-[320px] self-center",
+      onDelete: $options.onDelete,
       name: myModel.name,
       price: myModel.price,
       image: myModel.image,
       username: myModel.username,
-      order: +index
+      order: +index,
+      "over-icon-source": "trash",
+      height: $data.rowHeight,
+      "image-height": 200
     }, null, 8
     /* PROPS */
-    , ["name", "price", "image", "username", "order"])]);
+    , ["onDelete", "name", "price", "image", "username", "order", "height"])]);
   }), 128
   /* KEYED_FRAGMENT */
   ))], 32
@@ -36813,7 +36873,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.wrapper[data-v-0f97a1f0] {\n    height: 360px;\n}\n.avatar[data-v-0f97a1f0] {\n    height: 260px;\n    border: 2px solid transparent;\n    box-sizing: border-box;\n    display: flex;\n    overflow: hidden;\n    max-height: 260px;\n}\n.draggable[data-v-0f97a1f0] {\n}\n.avatar img.picture[data-v-0f97a1f0] {\n    width: 100%;\n    height: 100%;\n    -o-object-fit: cover;\n       object-fit: cover;\n}\n.avatar[data-v-0f97a1f0]:hover {\n    cursor: pointer;\n    border: 2px solid blue;\n    box-sizing: border-box;\n}\n.description[data-v-0f97a1f0]:hover {\n    cursor: pointer;\n    text-decoration: underline;\n}\n.description[data-v-0f97a1f0] {\n    margin-top: 17px;\n    font-family: 'Montserrat';\n    font-style: normal;\n    font-weight: 400;\n    /*font-size: 18px;*/\n    line-height: 22px;\n}\ncanvas[data-v-0f97a1f0] {\n    position:absolute;\n    /*left: 0;*/\n    left:-100%;\n}\n\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.avatar[data-v-0f97a1f0] {\n    border: 2px solid transparent;\n    box-sizing: border-box;\n    display: flex;\n    overflow: hidden;\n}\n.avatar img.picture[data-v-0f97a1f0] {\n    width: 100%;\n    height: 100%;\n    -o-object-fit: cover;\n       object-fit: cover;\n}\n.avatar[data-v-0f97a1f0]:hover {\n    cursor: pointer;\n    border: 2px solid blue;\n    box-sizing: border-box;\n}\n.description[data-v-0f97a1f0]:hover {\n    cursor: pointer;\n    text-decoration: underline;\n}\n.description[data-v-0f97a1f0] {\n    margin-top: 17px;\n    font-family: 'Montserrat';\n    font-style: normal;\n    font-weight: 400;\n    /*font-size: 18px;*/\n    line-height: 22px;\n}\n\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -36933,7 +36993,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.v-wrapper[data-v-c83da3e4] {\n    overflow: hidden;\n    transition: all ease 1s;\n}\n.btnChanges[data-v-c83da3e4] {\n    border: 2px solid;\n    box-sizing: border-box;\n    border-radius: 10px;\n\n    font-family: 'Montserrat';\n    font-style: normal;\n    font-weight: 400;\n    font-size: 18px;\n    line-height: 22px;\n\n    margin-top: 80.23px;\n    margin-left: 14px;\n    margin-right: 14px;\n    padding: 24px;\n    min-width: 303px;\n}\n#btnDiscard[data-v-c83da3e4] {\n    border-color: black;\n}\n#btnApply[data-v-c83da3e4] {\n    border-color: #1C9558;\n    color: #1C9558;\n}\n.top-block *[data-v-c83da3e4], .sort-block *[data-v-c83da3e4] {\n    display: inline;\n    vertical-align: middle;\n    line-height: inherit;\n    height: 100%;\n}\ninput[data-v-c83da3e4]:focus, input[data-v-c83da3e4]:focus-visible, select[data-v-c83da3e4]:focus, select[data-v-c83da3e4]:focus-visible {\n    box-shadow: none;\n}\n.sort-block[data-v-c83da3e4] {\n    height: inherit;\n}\n.droppable[data-v-c83da3e4] {\n    background: transparent;\n}\n\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.v-wrapper[data-v-c83da3e4] {\n    overflow: hidden;\n    transition: all ease 1s;\n}\n.btnChanges[data-v-c83da3e4] {\n    border: 2px solid;\n    box-sizing: border-box;\n    border-radius: 10px;\n\n    font-family: 'Montserrat';\n    font-style: normal;\n    font-weight: 400;\n    font-size: 18px;\n    line-height: 22px;\n\n    margin-top: 80.23px;\n    margin-left: 14px;\n    margin-right: 14px;\n    padding: 24px;\n    min-width: 303px;\n}\n#btnDiscard[data-v-c83da3e4] {\n    border-color: black;\n}\n#btnApply[data-v-c83da3e4] {\n    border-color: #1C9558;\n    color: #1C9558;\n}\n.top-block *[data-v-c83da3e4], .sort-block *[data-v-c83da3e4] {\n    display: inline;\n    vertical-align: middle;\n    line-height: inherit;\n    height: 100%;\n}\ninput[data-v-c83da3e4]:focus, input[data-v-c83da3e4]:focus-visible, select[data-v-c83da3e4]:focus, select[data-v-c83da3e4]:focus-visible {\n    box-shadow: none;\n}\n.sort-block[data-v-c83da3e4] {\n    height: inherit;\n}\n.droppable[data-v-c83da3e4] {\n    background: transparent;\n    padding: 0 5px;\n}\n\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
