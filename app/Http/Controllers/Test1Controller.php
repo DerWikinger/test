@@ -15,7 +15,6 @@ class Test1Controller extends Controller
             {"id":8,"model_name":"Rapier","price":0,"user_name":"Andrey Kovalev","image":"\/storage\/images\/image_12.png"},
             {"id":12,"model_name":"Rapier","price":0,"user_name":"Vitaly Miytofanov","image":"\/storage\/images\/image_13.png"}
         ]');
-        dump($collectionModels);
         return Inertia::render('Test1/Index', [
             'collectionData' => $collectionData,
             'collectionModels' => $collectionModels,

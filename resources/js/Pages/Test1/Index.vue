@@ -1,10 +1,25 @@
 <script setup>
 
+import {Head, Link} from '@inertiajs/inertia-vue3';
+import MyModelsCollection from "@/components/MyModelsCollection";
+import MyModelIcon from "@/components/MyModelIcon";
+import MyModelSlider from "@/components/MyModelSlider";
+import OtherCollectionIcons from "@/components/OtherCollectionIcons";
+import ViewLikeDislikeBlock from "@/components/ViewLikeDislikeBlock";
+
 defineProps({
    myModels: Object,
    collectionData: Object,
    collectionModels: Array,
 });
+
+function onMore () {
+    console.log('Button More is clicked!');
+};
+
+function onSend() {
+    console.log('Button Send is clicked!');
+};
 
 </script>
 
@@ -59,34 +74,7 @@ defineProps({
 </template>
 
 <script>
-import {Head, Link} from '@inertiajs/inertia-vue3';
-import MyModelsCollection from "@/components/MyModelsCollection";
-import MyModelIcon from "@/components/MyModelIcon";
-import MyModelSlider from "@/components/MyModelSlider";
-import OtherCollectionIcons from "@/components/OtherCollectionIcons";
-import ViewLikeDislikeBlock from "@/components/ViewLikeDislikeBlock";
 
-export default {
-    name: 'Index',
-    components: {
-        MyModelsCollection,
-        MyModelSlider,
-        MyModelIcon,
-        OtherCollectionIcons,
-        ViewLikeDislikeBlock,
-        Head,
-        Link,
-    },
-    methods: {
-        onMore: function () {
-            console.log('Button More is clicked');
-        },
-        onSend: function () {
-            console.log('Button Send is clicked');
-        },
-    }
-
-}
 </script>
 
 <style scoped>
